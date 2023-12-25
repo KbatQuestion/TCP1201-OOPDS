@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class View extends Application {
@@ -130,7 +132,7 @@ public class View extends Application {
     }
 
     public void setAdminMainMenuScene() {
-        // Teacher MainMenu
+        // Admin MainMenu
 
         GridPane adminGrid = new GridPane();
         adminGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -155,6 +157,33 @@ public class View extends Application {
 
         sceneAdminMainMenu = new Scene(adminGrid, 400, 250);
         window.setScene(sceneAdminMainMenu);
+    }
+
+
+    public void errorMessenge(String text, String title){
+    
+    Stage window = new Stage();
+
+    window.initModality(Modality.APPLICATION_MODAL);
+    window.setTitle(title);
+    window.setMinWidth(300);
+
+
+    
+   
+    
+    Label errorMessenge = new Label(text);
+    Button button1 = new Button("Close");
+    button1.setOnAction(e -> window.close());
+    VBox layout = new VBox(10);
+    layout.getChildren().addAll(errorMessenge,button1);
+    layout.setAlignment(Pos.CENTER);
+
+    Scene scene = new Scene(layout);
+    window.setScene(scene);    
+    window.showAndWait();
+
+
     }
 
 }

@@ -15,16 +15,18 @@ public class Controller {
             view.setStudentMainMenuScene();
         }
 
-        if (Id.equals("teacher") && password.equals("teacher")) {
+        else if (Id.equals("teacher") && password.equals("teacher")) {
             view.setTeacherMainMenuScene();
+            
         }
 
-        if (Id.equals("admin") && password.equals("admin")) {
+        else if (Id.equals("admin") && password.equals("admin")) {
             view.setAdminMainMenuScene();
         }
 
         else {
             System.out.println("Nutz");
+            view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
         }
     }
 }
