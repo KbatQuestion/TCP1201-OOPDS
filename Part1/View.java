@@ -15,9 +15,8 @@ import javafx.stage.Stage;
 
 public class View extends Application {
 
-    Button button;
     Stage window;
-    Scene scene1, scene2;
+    Scene scene_Login, sceneStudentMainMenu,sceneTeacherMainMenu, sceneAdminMainMenu;
 
     public static void main(String[] args) {
         launch(args);
@@ -26,14 +25,14 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Controller controller = new Controller();
-        window = primaryStage;
+        Controller controller = new Controller(this);
+        this.window = primaryStage;
         window.setTitle("Log in");
 
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
-        grid.setHgap(10);
+        GridPane loginGridPane = new GridPane();
+        loginGridPane.setPadding(new Insets(10, 10, 10, 10));
+        loginGridPane.setVgap(8);
+        loginGridPane.setHgap(10);
 
         // lable name
         Label nameLable = new Label("ID Number");
@@ -57,19 +56,118 @@ public class View extends Application {
         // Log In Button
 
         Button loginButton = new Button("Log in");
-        loginButton.setOnAction(e -> controller.isInt(passTextField, passTextField.getText()));
+        loginButton.setOnAction(e -> controller.isCredentialValid(passTextField.getText(),namTextField.getText()));
+        //loginButton.setOnAction(e -> window.setScene(scene_StudentMainMenu));
 
         GridPane.setConstraints(loginButton, 2, 5);
 
         // Passing the Object to the Scene
 
-        grid.getChildren().addAll(nameLable, namTextField, passLable, passTextField, loginButton);
+        loginGridPane.getChildren().addAll(nameLable, namTextField, passLable, passTextField, loginButton);
 
-        Scene scene = new Scene(grid, 400, 200);
-        window.setScene(scene);
+        Scene scene_Login = new Scene(loginGridPane, 400, 200);
+       
+
+
+    
+        window.setScene(scene_Login);
 
         window.show();
 
+    }
+
+    public void setStudentMainMenuScene() {
+        //Student MainMenu
+
+        GridPane studentGrid = new GridPane();
+        studentGrid.setPadding(new Insets(10, 10, 10, 10));
+        studentGrid.setVgap(20);
+        studentGrid.setHgap(20);
+
+
+        Label welcome = new Label("Welcome Student");
+
+        Button button1 = new Button("Button1");
+        Button button2 = new Button("Button2");
+        Button button3 = new Button("Button3");
+        Button button4 = new Button("Button4");
+
+        
+        GridPane.setConstraints(welcome, 2, 0);
+
+        GridPane.setConstraints(button1, 2, 1);
+        GridPane.setConstraints(button2, 2, 2);
+        GridPane.setConstraints(button3, 2, 3);
+        GridPane.setConstraints(button4, 2, 4);
+
+        studentGrid.getChildren().addAll(button1,button2,button3,button4,welcome);
+
+        sceneStudentMainMenu = new Scene(studentGrid, 400, 250);
+        window.setScene(sceneStudentMainMenu);
+    }
+
+
+
+
+     public void setTeacherMainMenuScene() {
+        //Teacher MainMenu
+
+        GridPane teacherGrid = new GridPane();
+        teacherGrid.setPadding(new Insets(10, 10, 10, 10));
+        teacherGrid.setVgap(20);
+        teacherGrid.setHgap(20);
+
+
+        Label welcome = new Label("Welcome Teacher");
+
+        Button button1 = new Button("Button1");
+        Button button2 = new Button("Button2");
+        Button button3 = new Button("Button3");
+        Button button4 = new Button("Button4");
+
+        
+        GridPane.setConstraints(welcome, 2, 0);
+
+        GridPane.setConstraints(button1, 2, 1);
+        GridPane.setConstraints(button2, 2, 2);
+        GridPane.setConstraints(button3, 2, 3);
+        GridPane.setConstraints(button4, 2, 4);
+
+        teacherGrid.getChildren().addAll(button1,button2,button3,button4,welcome);
+
+        sceneTeacherMainMenu = new Scene(teacherGrid, 400, 250);
+        window.setScene(sceneTeacherMainMenu);
+    }
+
+
+    public void setAdminMainMenuScene() {
+        //Teacher MainMenu
+
+        GridPane adminGrid = new GridPane();
+        adminGrid.setPadding(new Insets(10, 10, 10, 10));
+        adminGrid.setVgap(20);
+        adminGrid.setHgap(20);
+
+
+        Label welcome = new Label("Welcome Admin");
+
+        Button button1 = new Button("Button1");
+        Button button2 = new Button("Button2");
+        Button button3 = new Button("Button3");
+        Button button4 = new Button("Button4");
+
+        
+        GridPane.setConstraints(welcome, 2, 0);
+
+        GridPane.setConstraints(button1, 2, 1);
+        GridPane.setConstraints(button2, 2, 2);
+        GridPane.setConstraints(button3, 2, 3);
+        GridPane.setConstraints(button4, 2, 4);
+
+        adminGrid.getChildren().addAll(button1,button2,button3,button4,welcome);
+
+        sceneAdminMainMenu = new Scene(adminGrid, 400, 250);
+        window.setScene(sceneAdminMainMenu);
     }
 
 }

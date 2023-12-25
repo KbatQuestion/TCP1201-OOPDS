@@ -1,17 +1,38 @@
 package Part1;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Controller {
+    View view;
 
-    public void isInt(TextField input, String password) {
+    public Controller(View view) {
+        this.view = view;
+    }
 
-        String passWord = password;
+    // Credential Logic
+    public void isCredentialValid(String password, String Id) {
 
-        if (passWord.equals("deez")) {
-            System.out.println("hello");
+        if (Id.equals("student") && password.equals("student")) {
+            view.setStudentMainMenuScene();
+        }
 
+        if (Id.equals("teacher") && password.equals("teacher")) {
+            view.setTeacherMainMenuScene();
+        }
+
+        if (Id.equals("admin") && password.equals("admin")) {
+            view.setAdminMainMenuScene();
         }
 
         else {
