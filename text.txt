@@ -1,0 +1,2 @@
+Figure how to called function from another file
+
