@@ -31,6 +31,8 @@ public class View extends Application {
         this.window = primaryStage;
         window.setTitle("Log in");
 
+        // LogIn Page Gui
+
         GridPane loginGridPane = new GridPane();
         loginGridPane.setPadding(new Insets(10, 10, 10, 10));
         loginGridPane.setVgap(8);
@@ -75,8 +77,9 @@ public class View extends Application {
 
     }
 
+    // Student MainMenu
+
     public void setStudentMainMenuScene() {
-        // Student MainMenu
 
         GridPane studentGrid = new GridPane();
         studentGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -103,8 +106,9 @@ public class View extends Application {
         window.setScene(sceneStudentMainMenu);
     }
 
+    // Teacher MainMenu Gui
+
     public void setTeacherMainMenuScene() {
-        // Teacher MainMenu
 
         GridPane teacherGrid = new GridPane();
         teacherGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -131,8 +135,9 @@ public class View extends Application {
         window.setScene(sceneTeacherMainMenu);
     }
 
+    // Admin MainMenu Gui
+
     public void setAdminMainMenuScene() {
-        // Admin MainMenu
 
         GridPane adminGrid = new GridPane();
         adminGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -159,30 +164,27 @@ public class View extends Application {
         window.setScene(sceneAdminMainMenu);
     }
 
+    // Error Messages to be called
+    public void errorMessenge(String text, String title) {
 
-    public void errorMessenge(String text, String title){
-    
-    Stage window = new Stage();
+        Stage window = new Stage();
 
-    window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle(title);
-    window.setMinWidth(300);
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(title);
+        window.setMinWidth(300);
 
+        Label errorMessenge = new Label(text);
 
-    
-   
-    
-    Label errorMessenge = new Label(text);
-    Button button1 = new Button("Close");
-    button1.setOnAction(e -> window.close());
-    VBox layout = new VBox(10);
-    layout.getChildren().addAll(errorMessenge,button1);
-    layout.setAlignment(Pos.CENTER);
+        Button button1 = new Button("Close");
+        button1.setOnAction(e -> window.close());
 
-    Scene scene = new Scene(layout);
-    window.setScene(scene);    
-    window.showAndWait();
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(errorMessenge, button1);
+        layout.setAlignment(Pos.CENTER);
 
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
 
     }
 

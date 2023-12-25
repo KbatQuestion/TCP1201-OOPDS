@@ -1,6 +1,5 @@
 package Part1;
 
-
 public class Controller {
     View view;
 
@@ -17,18 +16,19 @@ public class Controller {
 
         else if (Id.equals("teacher") && password.equals("teacher")) {
             view.setTeacherMainMenuScene();
-            
+
         }
 
         else if (Id.equals("admin") && password.equals("admin")) {
             view.setAdminMainMenuScene();
         }
 
+
+        //Example of Usage of the Error message just called it whenever you want
         else {
-            System.out.println("Nutz");
             view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
         }
     }
 }
 
-// Where main logic of the program will be made
+
