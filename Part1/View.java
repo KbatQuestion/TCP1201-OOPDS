@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class View extends Application {
 
     Stage window;
-    Scene scene_Login, sceneStudentMainMenu,sceneTeacherMainMenu, sceneAdminMainMenu;
+    Scene scene_Login, sceneStudentMainMenu, sceneTeacherMainMenu, sceneAdminMainMenu;
 
     public static void main(String[] args) {
         launch(args);
@@ -56,8 +56,8 @@ public class View extends Application {
         // Log In Button
 
         Button loginButton = new Button("Log in");
-        loginButton.setOnAction(e -> controller.isCredentialValid(passTextField.getText(),namTextField.getText()));
-        //loginButton.setOnAction(e -> window.setScene(scene_StudentMainMenu));
+        loginButton.setOnAction(e -> controller.isCredentialValid(passTextField.getText(), namTextField.getText()));
+        // loginButton.setOnAction(e -> window.setScene(scene_StudentMainMenu));
 
         GridPane.setConstraints(loginButton, 2, 5);
 
@@ -66,10 +66,7 @@ public class View extends Application {
         loginGridPane.getChildren().addAll(nameLable, namTextField, passLable, passTextField, loginButton);
 
         Scene scene_Login = new Scene(loginGridPane, 400, 200);
-       
 
-
-    
         window.setScene(scene_Login);
 
         window.show();
@@ -77,13 +74,12 @@ public class View extends Application {
     }
 
     public void setStudentMainMenuScene() {
-        //Student MainMenu
+        // Student MainMenu
 
         GridPane studentGrid = new GridPane();
         studentGrid.setPadding(new Insets(10, 10, 10, 10));
         studentGrid.setVgap(20);
         studentGrid.setHgap(20);
-
 
         Label welcome = new Label("Welcome Student");
 
@@ -92,7 +88,6 @@ public class View extends Application {
         Button button3 = new Button("Button3");
         Button button4 = new Button("Button4");
 
-        
         GridPane.setConstraints(welcome, 2, 0);
 
         GridPane.setConstraints(button1, 2, 1);
@@ -100,23 +95,19 @@ public class View extends Application {
         GridPane.setConstraints(button3, 2, 3);
         GridPane.setConstraints(button4, 2, 4);
 
-        studentGrid.getChildren().addAll(button1,button2,button3,button4,welcome);
+        studentGrid.getChildren().addAll(button1, button2, button3, button4, welcome);
 
         sceneStudentMainMenu = new Scene(studentGrid, 400, 250);
         window.setScene(sceneStudentMainMenu);
     }
 
-
-
-
-     public void setTeacherMainMenuScene() {
-        //Teacher MainMenu
+    public void setTeacherMainMenuScene() {
+        // Teacher MainMenu
 
         GridPane teacherGrid = new GridPane();
         teacherGrid.setPadding(new Insets(10, 10, 10, 10));
         teacherGrid.setVgap(20);
         teacherGrid.setHgap(20);
-
 
         Label welcome = new Label("Welcome Teacher");
 
@@ -125,7 +116,6 @@ public class View extends Application {
         Button button3 = new Button("Button3");
         Button button4 = new Button("Button4");
 
-        
         GridPane.setConstraints(welcome, 2, 0);
 
         GridPane.setConstraints(button1, 2, 1);
@@ -133,21 +123,19 @@ public class View extends Application {
         GridPane.setConstraints(button3, 2, 3);
         GridPane.setConstraints(button4, 2, 4);
 
-        teacherGrid.getChildren().addAll(button1,button2,button3,button4,welcome);
+        teacherGrid.getChildren().addAll(button1, button2, button3, button4, welcome);
 
         sceneTeacherMainMenu = new Scene(teacherGrid, 400, 250);
         window.setScene(sceneTeacherMainMenu);
     }
 
-
     public void setAdminMainMenuScene() {
-        //Teacher MainMenu
+        // Teacher MainMenu
 
         GridPane adminGrid = new GridPane();
         adminGrid.setPadding(new Insets(10, 10, 10, 10));
         adminGrid.setVgap(20);
         adminGrid.setHgap(20);
-
 
         Label welcome = new Label("Welcome Admin");
 
@@ -156,7 +144,6 @@ public class View extends Application {
         Button button3 = new Button("Button3");
         Button button4 = new Button("Button4");
 
-        
         GridPane.setConstraints(welcome, 2, 0);
 
         GridPane.setConstraints(button1, 2, 1);
@@ -164,7 +151,7 @@ public class View extends Application {
         GridPane.setConstraints(button3, 2, 3);
         GridPane.setConstraints(button4, 2, 4);
 
-        adminGrid.getChildren().addAll(button1,button2,button3,button4,welcome);
+        adminGrid.getChildren().addAll(button1, button2, button3, button4, welcome);
 
         sceneAdminMainMenu = new Scene(adminGrid, 400, 250);
         window.setScene(sceneAdminMainMenu);
