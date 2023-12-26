@@ -156,7 +156,7 @@ public class View extends Application {
         button1.setOnAction(e -> createUserGui());
 
         Button button2 = new Button("Create Courses");
-        button2.setOnAction(e -> createCoursesGui());
+        //button2.setOnAction(e -> createCoursesGui());
 
 
         Button button3 = new Button("Assign Courses");
