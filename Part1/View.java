@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -18,7 +19,12 @@ import javafx.stage.Stage;
 public class View extends Application {
 
     Stage window;
-    Scene scene_Login, sceneStudentMainMenu, sceneTeacherMainMenu, sceneAdminMainMenu;
+    Scene scene_Login,
+            sceneStudentMainMenu,
+            sceneTeacherMainMenu,
+            sceneAdminMainMenu,
+            sceneCreateUser,
+            sceneCreateCourse;
 
     public static void main(String[] args) {
         launch(args);
@@ -146,10 +152,15 @@ public class View extends Application {
 
         Label welcome = new Label("Welcome Admin");
 
-        Button button1 = new Button("Button1");
-        Button button2 = new Button("Button2");
-        Button button3 = new Button("Button3");
-        Button button4 = new Button("Button4");
+        Button button1 = new Button("Create a User");
+        button1.setOnAction(e -> createUserGui());
+
+        Button button2 = new Button("Create Courses");
+        button2.setOnAction(e -> createCoursesGui());
+
+
+        Button button3 = new Button("Assign Courses");
+        Button button4 = new Button("View Courses");
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -187,5 +198,71 @@ public class View extends Application {
         window.showAndWait();
 
     }
+
+    public void createUserGui() {
+
+        GridPane createUserGrid = new GridPane();
+        createUserGrid.setPadding(new Insets(10, 10, 10, 10));
+        createUserGrid.setVgap(20);
+        createUserGrid.setHgap(20);
+
+        Label contexLabel = new Label("Create User");
+        Label label2 = new Label("Name");
+        Label label3 = new Label("Id");
+        Label lable4 = new Label("Password");
+        Label lable5 = new Label("User Type");
+
+        Button button1 = new Button("Create User");
+
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setAdminMainMenuScene());
+
+        TextField name = new TextField();
+        TextField id = new TextField();
+        TextField password = new TextField();
+
+        CheckBox studentCheckBox = new CheckBox("Student");
+        CheckBox teacherCheckBox = new CheckBox("Teacher");
+
+        GridPane.setConstraints(contexLabel, 2, 0);
+
+        GridPane.setConstraints(label2, 2, 1);
+        GridPane.setConstraints(name, 2, 2);
+
+        GridPane.setConstraints(label3, 2, 3);
+        GridPane.setConstraints(id, 2, 4);
+
+        GridPane.setConstraints(lable4, 2, 5);
+        GridPane.setConstraints(password, 2, 6);
+
+        GridPane.setConstraints(lable5, 2, 7);
+
+        GridPane.setConstraints(studentCheckBox, 2, 8);
+        GridPane.setConstraints(teacherCheckBox, 3, 8);
+
+        GridPane.setConstraints(button1, 2, 9);
+        GridPane.setConstraints(button2, 3, 9);
+
+        createUserGrid.getChildren().addAll(
+            contexLabel, 
+            label2, 
+            label3, 
+            lable4, 
+            lable5, 
+            button1, 
+            button2, 
+            name, 
+            id,
+            password, 
+            studentCheckBox, 
+            teacherCheckBox
+            );
+
+        sceneCreateUser = new Scene(createUserGrid, 400, 450);
+        window.setScene(sceneCreateUser);
+    }
+
+
+    
 
 }
