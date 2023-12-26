@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -156,8 +157,7 @@ public class View extends Application {
         button1.setOnAction(e -> createUserGui());
 
         Button button2 = new Button("Create Courses");
-        //button2.setOnAction(e -> createCoursesGui());
-
+        button2.setOnAction(e -> createCoursesGui());
 
         Button button3 = new Button("Assign Courses");
         Button button4 = new Button("View Courses");
@@ -244,25 +244,100 @@ public class View extends Application {
         GridPane.setConstraints(button2, 3, 9);
 
         createUserGrid.getChildren().addAll(
-            contexLabel, 
-            label2, 
-            label3, 
-            lable4, 
-            lable5, 
-            button1, 
-            button2, 
-            name, 
-            id,
-            password, 
-            studentCheckBox, 
-            teacherCheckBox
-            );
+                contexLabel,
+                label2,
+                label3,
+                lable4,
+                lable5,
+                button1,
+                button2,
+                name,
+                id,
+                password,
+                studentCheckBox,
+                teacherCheckBox);
 
         sceneCreateUser = new Scene(createUserGrid, 400, 450);
         window.setScene(sceneCreateUser);
     }
 
+    // redo when SQL up and running
+    public void createCoursesGui() {
 
-    
+        GridPane createCourseGrid = new GridPane();
+        createCourseGrid.setPadding(new Insets(10, 10, 10, 10));
+        createCourseGrid.setVgap(20);
+        createCourseGrid.setHgap(20);
+
+        Label label1 = new Label("Create Course");
+        Label label2 = new Label("Course Code");
+        Label label3 = new Label("Credit Hour");
+        Label label4 = new Label("Pre-Requsite");
+        Label label5 = new Label("Lecture");
+
+
+
+        TextField subjectCode = new TextField();
+
+        Button button1 = new Button("Create a Courses");
+        button1.setOnAction(e -> createUserGui());
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setAdminMainMenuScene());
+
+        ChoiceBox<String> subjectsRequired = new ChoiceBox();
+        ChoiceBox<Integer> creditHour = new ChoiceBox();
+         ChoiceBox<String> assignedLecture = new ChoiceBox();
+
+        // Will change when Sql implement
+        subjectsRequired.getItems().addAll("test1", "Test2");
+        creditHour.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        assignedLecture.getItems().addAll("lecture1", "NG hu");
+
+        GridPane.setConstraints(label1, 1, 0);
+        GridPane.setConstraints(label2, 1, 1);
+        GridPane.setConstraints(subjectCode, 1, 2);
+        GridPane.setConstraints(label3, 1, 3);
+        GridPane.setConstraints(creditHour, 1, 4);
+        GridPane.setConstraints(label4, 1, 5);
+        GridPane.setConstraints(subjectsRequired, 1, 6);
+        GridPane.setConstraints(label5, 1, 7);
+        GridPane.setConstraints(assignedLecture, 1, 8);
+
+
+
+        GridPane.setConstraints(button1, 1, 9);
+        GridPane.setConstraints(button2, 2, 9);
+
+        createCourseGrid.getChildren().addAll(
+                label1,
+                label2,
+                label3,
+                label4,
+                label5,
+                subjectCode,
+                creditHour,
+                subjectsRequired,
+                assignedLecture,
+                button1,
+                button2);
+
+        sceneCreateCourse = new Scene(createCourseGrid, 400, 420);
+        window.setTitle("Create Course");
+        window.setScene(sceneCreateCourse);
+
+    }
+
+     public void viewCourse(){
+
+        
+
+    }
+
+
+
+
+
+
+
 
 }
