@@ -2,6 +2,8 @@ Todo Gui
 
 Students can self-register for courses in new trimesters
 
+
+
 Lecturers can view all the students in their courses
 
 Admin can view all the students and the lecturers for courses

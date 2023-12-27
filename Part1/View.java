@@ -1,6 +1,8 @@
 package Part1;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,12 +12,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class View extends Application {
 
@@ -200,6 +206,7 @@ public class View extends Application {
     }
 
     public void createUserGui() {
+        Controller controller = new Controller(this);
 
         GridPane createUserGrid = new GridPane();
         createUserGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -212,17 +219,27 @@ public class View extends Application {
         Label lable4 = new Label("Password");
         Label lable5 = new Label("User Type");
 
-        Button button1 = new Button("Create User");
-
-        Button button2 = new Button("Cancel");
-        button2.setOnAction(e -> setAdminMainMenuScene());
-
         TextField name = new TextField();
         TextField id = new TextField();
         TextField password = new TextField();
 
         CheckBox studentCheckBox = new CheckBox("Student");
         CheckBox teacherCheckBox = new CheckBox("Teacher");
+
+
+
+
+
+
+
+        Button createUserButton = new Button("Create User");
+        createUserButton.setOnAction(e -> controller.createUser(name.getText(),id.getText(),password.getText(),teacherCheckBox,studentCheckBox));
+
+
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setAdminMainMenuScene());
+
+        
 
         GridPane.setConstraints(contexLabel, 2, 0);
 
@@ -240,7 +257,7 @@ public class View extends Application {
         GridPane.setConstraints(studentCheckBox, 2, 8);
         GridPane.setConstraints(teacherCheckBox, 3, 8);
 
-        GridPane.setConstraints(button1, 2, 9);
+        GridPane.setConstraints(createUserButton, 2, 9);
         GridPane.setConstraints(button2, 3, 9);
 
         createUserGrid.getChildren().addAll(
@@ -249,7 +266,7 @@ public class View extends Application {
                 label3,
                 lable4,
                 lable5,
-                button1,
+                createUserButton,
                 button2,
                 name,
                 id,
@@ -275,8 +292,6 @@ public class View extends Application {
         Label label4 = new Label("Pre-Requsite");
         Label label5 = new Label("Lecture");
 
-
-
         TextField subjectCode = new TextField();
 
         Button button1 = new Button("Create a Courses");
@@ -286,7 +301,7 @@ public class View extends Application {
 
         ChoiceBox<String> subjectsRequired = new ChoiceBox();
         ChoiceBox<Integer> creditHour = new ChoiceBox();
-         ChoiceBox<String> assignedLecture = new ChoiceBox();
+        ChoiceBox<String> assignedLecture = new ChoiceBox();
 
         // Will change when Sql implement
         subjectsRequired.getItems().addAll("test1", "Test2");
@@ -302,8 +317,6 @@ public class View extends Application {
         GridPane.setConstraints(subjectsRequired, 1, 6);
         GridPane.setConstraints(label5, 1, 7);
         GridPane.setConstraints(assignedLecture, 1, 8);
-
-
 
         GridPane.setConstraints(button1, 1, 9);
         GridPane.setConstraints(button2, 2, 9);
@@ -326,18 +339,5 @@ public class View extends Application {
         window.setScene(sceneCreateCourse);
 
     }
-
-     public void viewCourse(){
-
-        
-
-    }
-
-
-
-
-
-
-
 
 }
