@@ -40,8 +40,12 @@ public class View extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Controller controller = new Controller(this);
         this.window = primaryStage;
+        logInMenu();
+    }
+
+    public void logInMenu() {
+        Controller controller = new Controller(this);
         window.setTitle("Log in");
 
         // LogIn Page Gui
@@ -104,7 +108,8 @@ public class View extends Application {
         Button button1 = new Button("Button1");
         Button button2 = new Button("Button2");
         Button button3 = new Button("Button3");
-        Button button4 = new Button("Button4");
+        Button button4 = new Button("Log Out");
+        button4.setOnAction(e -> logInMenu());
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -133,7 +138,8 @@ public class View extends Application {
         Button button1 = new Button("Button1");
         Button button2 = new Button("Button2");
         Button button3 = new Button("Button3");
-        Button button4 = new Button("Button4");
+        Button button4 = new Button("Log Out");
+        button4.setOnAction(e -> logInMenu());
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -166,7 +172,8 @@ public class View extends Application {
         button2.setOnAction(e -> createCoursesGui());
 
         Button button3 = new Button("Assign Courses");
-        Button button4 = new Button("View Courses");
+        Button button4 = new Button("Log Out");
+        button4.setOnAction(e -> logInMenu());
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -226,20 +233,12 @@ public class View extends Application {
         CheckBox studentCheckBox = new CheckBox("Student");
         CheckBox teacherCheckBox = new CheckBox("Teacher");
 
-
-
-
-
-
-
         Button createUserButton = new Button("Create User");
-        createUserButton.setOnAction(e -> controller.createUser(name.getText(),id.getText(),password.getText(),teacherCheckBox,studentCheckBox));
-
+        createUserButton.setOnAction(e -> controller.createUser(name.getText(), id.getText(), password.getText(),
+                teacherCheckBox, studentCheckBox));
 
         Button button2 = new Button("Cancel");
         button2.setOnAction(e -> setAdminMainMenuScene());
-
-        
 
         GridPane.setConstraints(contexLabel, 2, 0);
 
