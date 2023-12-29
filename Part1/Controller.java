@@ -2,6 +2,19 @@ package Part1;
 import java.util.ArrayList;
 import javafx.scene.control.CheckBox;
 
+// Any object that has view. is just Gui windows that you guys can call
+// view.setStudentMainMenuScene - MainMenuScene for the Student
+// view.setTeacherMainMenuScene - MainMenuScene for the Teacher
+// view.setAdminMainMenuScene - MainMenuScene for the Admin
+// view.logInMenu - Login Screen
+// view.errorMessenge("Text", "Title"); - Error Mesage but you have pass the two vatiable
+// view.createUser - Menu to create User
+// view.createCoursesGui-Menu to Create Course
+
+//Any Function in this File is just action when someone click the button in the gui
+// For the Function just pass the argument/paramaters (you ask me!) to make a new Function
+// Make sure to Use Class
+
 class User {
     protected String id;
     protected String name;
