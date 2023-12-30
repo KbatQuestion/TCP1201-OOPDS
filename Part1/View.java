@@ -21,7 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableRow;
 
 public class View extends Application {
 
@@ -31,7 +31,10 @@ public class View extends Application {
             sceneTeacherMainMenu,
             sceneAdminMainMenu,
             sceneCreateUser,
-            sceneCreateCourse;
+            sceneCreateCourse,
+            sceneViewAllMembers,
+            assignCoursesGui,
+            sceneDeleteCourse;
 
     public static void main(String[] args) {
         launch(args);
@@ -172,8 +175,16 @@ public class View extends Application {
         button2.setOnAction(e -> createCoursesGui());
 
         Button button3 = new Button("Assign Courses");
-        Button button4 = new Button("Log Out");
-        button4.setOnAction(e -> logInMenu());
+        button3.setOnAction(e -> assignCoursesGui());
+
+        Button button4 = new Button("Unasign Course");
+        button4.setOnAction(e -> deleteCoursesGui());
+
+        Button button5 = new Button("View All");
+        button5.setOnAction(e -> viewAllMembers());
+
+        Button button6 = new Button("Log out");
+        button6.setOnAction(e -> logInMenu());
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -181,10 +192,12 @@ public class View extends Application {
         GridPane.setConstraints(button2, 2, 2);
         GridPane.setConstraints(button3, 2, 3);
         GridPane.setConstraints(button4, 2, 4);
+        GridPane.setConstraints(button5, 2, 5);
+        GridPane.setConstraints(button6, 2, 6);
 
-        adminGrid.getChildren().addAll(button1, button2, button3, button4, welcome);
+        adminGrid.getChildren().addAll(button1, button2, button3, button4, button5, button6, welcome);
 
-        sceneAdminMainMenu = new Scene(adminGrid, 400, 250);
+        sceneAdminMainMenu = new Scene(adminGrid, 400, 350);
         window.setScene(sceneAdminMainMenu);
     }
 
@@ -277,7 +290,6 @@ public class View extends Application {
         window.setScene(sceneCreateUser);
     }
 
-    // redo when SQL up and running
     public void createCoursesGui() {
 
         GridPane createCourseGrid = new GridPane();
@@ -336,6 +348,161 @@ public class View extends Application {
         sceneCreateCourse = new Scene(createCourseGrid, 400, 420);
         window.setTitle("Create Course");
         window.setScene(sceneCreateCourse);
+
+    }
+
+    public void assignCoursesGui() {
+
+        GridPane assignCourseGrid = new GridPane();
+        assignCourseGrid.setPadding(new Insets(10, 10, 10, 10));
+        assignCourseGrid.setVgap(20);
+        assignCourseGrid.setHgap(20);
+
+        Label label1 = new Label("Assign Course");
+        Label label2 = new Label("Student Id");
+        Label label3 = new Label("Course");
+
+        TextField subjectCode = new TextField();
+
+        Button button1 = new Button("Assign Courses");
+        button1.setOnAction(e -> createUserGui());
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setAdminMainMenuScene());
+
+        ChoiceBox<String> subjectsRequired = new ChoiceBox();
+
+        // Will change when Sql implement
+        subjectsRequired.getItems().addAll("test1", "Test2");
+
+        GridPane.setConstraints(label1, 1, 0);
+        GridPane.setConstraints(label2, 1, 1);
+        GridPane.setConstraints(subjectCode, 1, 2);
+        GridPane.setConstraints(label3, 1, 3);
+
+        GridPane.setConstraints(subjectsRequired, 1, 6);
+
+        GridPane.setConstraints(button1, 1, 9);
+        GridPane.setConstraints(button2, 2, 9);
+
+        assignCourseGrid.getChildren().addAll(
+                label1,
+                label2,
+                label3,
+                subjectCode,
+
+                subjectsRequired,
+                button1,
+                button2);
+
+        sceneCreateCourse = new Scene(assignCourseGrid, 400, 420);
+        window.setTitle("Create Course");
+        window.setScene(sceneCreateCourse);
+
+    }
+
+    public void deleteCoursesGui() {
+
+        GridPane deleteCourseGrid = new GridPane();
+        deleteCourseGrid.setPadding(new Insets(10, 10, 10, 10));
+        deleteCourseGrid.setVgap(20);
+        deleteCourseGrid.setHgap(20);
+
+        Label label1 = new Label("Assign Course");
+        Label label2 = new Label("Student Id");
+        Label label3 = new Label("Course");
+
+        TextField subjectCode = new TextField();
+
+        Button button1 = new Button("Assign Courses");
+        button1.setOnAction(e -> createUserGui());
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setAdminMainMenuScene());
+
+        ChoiceBox<String> subjectsRequired = new ChoiceBox();
+
+        // Will change when Sql implement
+        subjectsRequired.getItems().addAll("test1", "Test2");
+
+        GridPane.setConstraints(label1, 1, 0);
+        GridPane.setConstraints(label2, 1, 1);
+        GridPane.setConstraints(subjectCode, 1, 2);
+        GridPane.setConstraints(label3, 1, 3);
+
+        GridPane.setConstraints(subjectsRequired, 1, 6);
+
+        GridPane.setConstraints(button1, 1, 9);
+        GridPane.setConstraints(button2, 2, 9);
+
+        deleteCourseGrid.getChildren().addAll(
+                label1,
+                label2,
+                label3,
+                subjectCode,
+
+                subjectsRequired,
+                button1,
+                button2);
+
+        sceneDeleteCourse = new Scene(deleteCourseGrid, 400, 420);
+        window.setTitle("Create Course");
+        window.setScene(sceneDeleteCourse);
+
+    }
+
+    public void viewAllMembers() {
+
+        TableView<Product> table;
+
+        GridPane viewMembersGrid = new GridPane();
+        viewMembersGrid.setPadding(new Insets(10, 10, 10, 10));
+        viewMembersGrid.setVgap(20);
+        viewMembersGrid.setHgap(20);
+
+        TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setMinWidth(200);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Product, Double> priceColumn = new TableColumn<>("Price");
+        priceColumn.setMinWidth(200);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        TableColumn<Product, Integer> quantityColumn = new TableColumn<>("Quantity");
+        quantityColumn.setMinWidth(200);
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        table = new TableView<>();
+        table.setItems(getProducts());
+        table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+
+        Label welcome = new Label("View All Members");
+
+        Button button1 = new Button("Button1");
+        Button button2 = new Button("Button2");
+        Button button3 = new Button("Button3");
+        Button button4 = new Button("Go Back");
+        button4.setOnAction(e -> setAdminMainMenuScene());
+
+        GridPane.setConstraints(table, 2, 0);
+
+        GridPane.setConstraints(welcome, 2, 2);
+
+        GridPane.setConstraints(button1, 2, 3);
+        GridPane.setConstraints(button2, 2, 4);
+        GridPane.setConstraints(button3, 2, 5);
+        GridPane.setConstraints(button4, 2, 6);
+
+        viewMembersGrid.getChildren().addAll(button1, button2, button3, button4, welcome, table);
+
+        sceneViewAllMembers = new Scene(viewMembersGrid, 600, 450);
+        window.setScene(sceneViewAllMembers);
+
+    }
+
+    // Sample Data WIll be Chnage
+    public ObservableList<Product> getProducts() {
+        ObservableList<Product> products = FXCollections.observableArrayList();
+        products.add(new Product("Laptop", 855.00, 2));
+        return products;
 
     }
 
