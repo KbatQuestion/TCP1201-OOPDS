@@ -24,17 +24,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.TableRow;
 
 public class View extends Application {
-
+    Controller controller;
     Stage window;
-    Scene scene_Login,
-            sceneStudentMainMenu,
-            sceneTeacherMainMenu,
-            sceneAdminMainMenu,
-            sceneCreateUser,
-            sceneCreateCourse,
-            sceneViewAllMembers,
-            assignCoursesGui,
-            sceneDeleteCourse;
+    
+    Scene 
+    scene_Login,
+    sceneStudentMainMenu,
+    sceneTeacherMainMenu,
+    sceneAdminMainMenu,
+    sceneCreateUser,
+    sceneCreateCourse,
+    sceneViewAllMembers,
+    assignCoursesGui,
+    sceneDeleteCourse;
 
     public static void main(String[] args) {
         launch(args);
@@ -44,11 +46,11 @@ public class View extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.window = primaryStage;
+        this.controller = new Controller(this);
         logInMenu();
     }
 
     public void logInMenu() {
-        Controller controller = new Controller(this);
         window.setTitle("Log in");
 
         // LogIn Page Gui
@@ -226,8 +228,6 @@ public class View extends Application {
     }
 
     public void createUserGui() {
-        Controller controller = new Controller(this);
-
         GridPane createUserGrid = new GridPane();
         createUserGrid.setPadding(new Insets(10, 10, 10, 10));
         createUserGrid.setVgap(20);

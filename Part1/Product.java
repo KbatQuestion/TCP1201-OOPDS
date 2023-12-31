@@ -1,5 +1,8 @@
 package Part1;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Product {
 
     private String name;
@@ -45,6 +48,8 @@ public class Product {
     public void setQuantity (int quantity){
         this.quantity =quantity;
     }
+
+   
     
 
 
