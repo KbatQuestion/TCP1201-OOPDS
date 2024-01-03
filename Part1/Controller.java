@@ -2,8 +2,10 @@ package Part1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 
 // Any object that has view. is just Gui windows that you guys can call
 // view.setStudentMainMenuScene - MainMenuScene for the Student
@@ -18,15 +20,9 @@ import javafx.scene.control.CheckBox;
 // For the Function just pass the argument/paramaters (you ask me!) to make a new Function
 // Make sure to Use Class
 
-class User {
-    protected String id;
-    protected String name;
-    protected String password;
-    protected String userType;
-    protected String courseCode;
-}
 
-public class Controller extends User {
+
+public class Controller{
     View view;
     Model model = new Model();
 
@@ -37,46 +33,53 @@ public class Controller extends User {
     // Credential Logic
     public void isCredentialValid(String password, String id) {
 
-        HashMap<String, ArrayList<String>> tempTeahcerLoginMap = new HashMap<String, ArrayList<String>>(
-                model.getTeacherHashMap());
+        if (containsOnlyNumbers(id)) {
+            int idInt = Integer.parseInt(id);
 
-        HashMap<String, ArrayList<String>> tempStudentLoginMap = new HashMap<String, ArrayList<String>>(
-                model.getStudentHashMap());
+            HashMap<Integer, String> tempTeacherPasswordHashMap = new HashMap<Integer, String>(
+                    model.getTeacherPasswordHashMap());
 
-        if (tempTeahcerLoginMap.containsKey(id)) {
+            HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>(
+                    model.getStudentPasswordHashMap());
 
-            if (password.equals(tempTeahcerLoginMap.computeIfAbsent(id, k -> new ArrayList<>()).get(1))) {
+            if (tempTeacherPasswordHashMap.containsKey(idInt)) {
 
-                view.setTeacherMainMenuScene();
-                System.out.println("Lecturer login successful");
+                if (tempTeacherPasswordHashMap.get(idInt).equals(password)) {
+
+                    view.setTeacherMainMenuScene();
+                    System.out.println("Lecturer login successful");
+                }
+
+                else {
+                    view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
+                }
+
             }
 
+            else if (tempStudentPasswordHashMap.containsKey(idInt)) {
+
+                if (tempStudentPasswordHashMap.get(idInt).equals(password)) {
+
+                    view.setStudentMainMenuScene();
+                    System.out.println("Student login successful");
+                }
+
+                else {
+                    view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
+                }
+            }
+
+            else if (idInt == 0000 && password.equals("0000")) {
+                view.setAdminMainMenuScene();
+                System.out.println("Admin login successful");
+            }
+
+            // Example of Usage of the Error message just called it whenever you want
             else {
                 view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
             }
-
         }
 
-        else if (tempStudentLoginMap.containsKey(id)) {
-
-            if (password.equals(tempStudentLoginMap.computeIfAbsent(id, k -> new ArrayList<>()).get(1))) {
-
-                view.setStudentMainMenuScene();
-            }
-
-            else {
-                view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
-            }
-
-        }
-
-        else if (id.equals("admin") && password.equals("admin")) {
-            view.setAdminMainMenuScene();
-
-            System.out.println("Admin login successful");
-        }
-
-        // Example of Usage of the Error message just called it whenever you want
         else {
             view.errorMessenge("Invalid Username/Password", "Invalid Credentials");
         }
@@ -84,32 +87,95 @@ public class Controller extends User {
 
     public void createUser(String name, String id, String password, CheckBox teacherCheckBox,
             CheckBox studentCheckBox) {
-
+        int idInt = Integer.parseInt(id);
         if (teacherCheckBox.isSelected() && !studentCheckBox.isSelected()) {
-            HashMap<String, ArrayList<String>> tempTeacherLoginMap = new HashMap<String, ArrayList<String>>();
+            HashMap<Integer, String> tempTacherPasswordHashMap = new HashMap<Integer, String>();
+            HashMap<Integer, String> tempTeacherNameHashMap = new HashMap<Integer, String>();
 
-            tempTeacherLoginMap.put(id, new ArrayList<String>());
-            tempTeacherLoginMap.get(id).add(name);
-            tempTeacherLoginMap.get(id).add(password);
-            model.setTeacherHashMap(tempTeacherLoginMap);
+            tempTeacherNameHashMap.put(idInt, name);
+            tempTacherPasswordHashMap.put(idInt, password);
+            model.setTeacherNameHashMap(tempTeacherNameHashMap);
+            model.setTeacherPasswordHashMap(tempTacherPasswordHashMap);
+
             view.errorMessenge("Lecture " + (name) + " Created Sucessfully", "User Created");
 
         }
 
         if (studentCheckBox.isSelected() && !teacherCheckBox.isSelected()) {
-            HashMap<String, ArrayList<String>> tempStudentLoginMap = new HashMap<String, ArrayList<String>>();
+            HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>();
+            HashMap<Integer, String> tempStudentNameHashMap = new HashMap<Integer, String>();
 
-            tempStudentLoginMap.put(id, new ArrayList<String>());
-            tempStudentLoginMap.get(id).add(name);
-            tempStudentLoginMap.get(id).add(password);
-            model.setStudentHashMap(tempStudentLoginMap);
-            view.errorMessenge("Student " + (name) + " Created Sucessfully", "User Created");
+            tempStudentPasswordHashMap.put(idInt, password);
+            tempStudentNameHashMap.put(idInt, name);
+            model.setStudentNameHashMap(tempStudentNameHashMap);
+            model.setStudentPasswordHashMap(tempStudentPasswordHashMap);
 
+            view.errorMessenge("Lecture " + (name) + " Created Sucessfully", "User Created");
         }
 
         if (studentCheckBox.isSelected() && teacherCheckBox.isSelected()) {
             view.errorMessenge("Pick One User Type Only", "Invalid Option");
         }
+
+    }
+
+    private static boolean containsOnlyNumbers(String str) {
+        return str.matches("[0-9]+");
+    }
+
+    public void  createCourse(String corseName,ChoiceBox<String> lectureName){
+
+        HashMap<Integer, String> NameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
+        String lectureSelected = lectureName.getValue();
+
+
+
+        Integer foundKey = getKeyByValue(NameHashMap, lectureSelected);
+
+        // Check if the value exists in the HashMap
+        if (foundKey != null) {
+            System.out.println("Key for value '" + lectureSelected + "': " + foundKey);
+            
+
+
+
+        } else {
+            System.out.println("Value '" + lectureSelected + "' not found in the HashMap");
+        }
+
+
+
+        System.out.println(corseName);
+        System.out.println(lectureName.getValue());
+
+    }
+
+       private static Integer getKeyByValue(HashMap<Integer, String> map, String value) {
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        // If value is not found, return null
+        return null;
+    }
+
+
+
+    public String[] populateLecureChoiceBox() {
+        
+        HashMap<Integer, String> TeacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
+
+        int size = TeacherNameHashMap.size();
+
+        String[] stringArray = new String[size];
+
+        int index = 0;
+        for (Integer key : TeacherNameHashMap.keySet()) {
+            stringArray[index++] = TeacherNameHashMap.get(key);
+        }
+
+        return stringArray;
 
     }
 

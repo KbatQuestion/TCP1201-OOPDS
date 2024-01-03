@@ -1,5 +1,7 @@
 package Part1;
 
+import java.util.HashMap;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -228,6 +230,9 @@ public class View extends Application {
     }
 
     public void createUserGui() {
+
+        
+
         GridPane createUserGrid = new GridPane();
         createUserGrid.setPadding(new Insets(10, 10, 10, 10));
         createUserGrid.setVgap(20);
@@ -291,6 +296,9 @@ public class View extends Application {
     }
 
     public void createCoursesGui() {
+         String [] names = controller.populateLecureChoiceBox();
+
+
 
         GridPane createCourseGrid = new GridPane();
         createCourseGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -305,19 +313,22 @@ public class View extends Application {
 
         TextField subjectCode = new TextField();
 
+        ChoiceBox<String> subjectsRequired = new ChoiceBox<>();
+        ChoiceBox<Integer> creditHour = new ChoiceBox<>();
+        ChoiceBox<String> assignedLecture = new ChoiceBox<>();
+
         Button button1 = new Button("Create a Courses");
-        button1.setOnAction(e -> createUserGui());
+        button1.setOnAction(e -> controller.createCourse(subjectCode.getText(),assignedLecture));
+
         Button button2 = new Button("Cancel");
         button2.setOnAction(e -> setAdminMainMenuScene());
 
-        ChoiceBox<String> subjectsRequired = new ChoiceBox();
-        ChoiceBox<Integer> creditHour = new ChoiceBox();
-        ChoiceBox<String> assignedLecture = new ChoiceBox();
+        
 
-        // Will change when Sql implement
-        subjectsRequired.getItems().addAll("test1", "Test2");
-        creditHour.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        assignedLecture.getItems().addAll("lecture1", "NG hu");
+        // // Will change when Sql implement
+        // subjectsRequired.getItems().addAll("test1", "Test2");
+        // creditHour.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+         assignedLecture.getItems().addAll(names);
 
         GridPane.setConstraints(label1, 1, 0);
         GridPane.setConstraints(label2, 1, 1);
@@ -451,27 +462,26 @@ public class View extends Application {
 
     public void viewAllMembers() {
 
-        TableView<Product> table;
+        TableView<ModelTable> table;
 
         GridPane viewMembersGrid = new GridPane();
         viewMembersGrid.setPadding(new Insets(10, 10, 10, 10));
         viewMembersGrid.setVgap(20);
         viewMembersGrid.setHgap(20);
 
-        TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<ModelTable, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setMinWidth(200);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Product, Double> priceColumn = new TableColumn<>("Price");
+        TableColumn<ModelTable, Double> priceColumn = new TableColumn<>("Price");
         priceColumn.setMinWidth(200);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        TableColumn<Product, Integer> quantityColumn = new TableColumn<>("Quantity");
+        TableColumn<ModelTable, Integer> quantityColumn = new TableColumn<>("Quantity");
         quantityColumn.setMinWidth(200);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         table = new TableView<>();
-        table.setItems(getProducts());
         table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
 
         Label welcome = new Label("View All Members");
@@ -499,11 +509,7 @@ public class View extends Application {
     }
 
     // Sample Data WIll be Chnage
-    public ObservableList<Product> getProducts() {
-        ObservableList<Product> products = FXCollections.observableArrayList();
-        products.add(new Product("Laptop", 855.00, 2));
-        return products;
-
-    }
+   
+    
 
 }
