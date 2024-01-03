@@ -2,7 +2,9 @@ package Part1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -127,7 +129,8 @@ public class Controller{
 
         HashMap<Integer, String> NameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
         String lectureSelected = lectureName.getValue();
-
+        Set<String> courseAvailablSet = new HashSet<String>(model.getCourseAvailablSet());
+        HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
 
 
         Integer foundKey = getKeyByValue(NameHashMap, lectureSelected);
@@ -135,7 +138,16 @@ public class Controller{
         // Check if the value exists in the HashMap
         if (foundKey != null) {
             System.out.println("Key for value '" + lectureSelected + "': " + foundKey);
-            
+            courseAvailablSet.add(corseName);
+            teacherAsignCourseHashMap.computeIfAbsent(foundKey, k -> new ArrayList<>()).add(corseName);
+            model.setTeacherAsignCourseHashMap(teacherAsignCourseHashMap);
+            model.setCourseAvailablSet(courseAvailablSet);
+
+
+
+
+
+
 
 
 
@@ -145,8 +157,9 @@ public class Controller{
 
 
 
-        System.out.println(corseName);
-        System.out.println(lectureName.getValue());
+        System.out.println("Course Name " + corseName);
+        System.out.println("Lecture Name " + lectureName.getValue());
+        System.out.println("Array "+teacherAsignCourseHashMap);
 
     }
 
