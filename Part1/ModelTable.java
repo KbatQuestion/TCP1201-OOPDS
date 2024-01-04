@@ -3,7 +3,7 @@ package Part1;
 public class ModelTable {
 
     private String name;
-    private int id;
+    private Integer id;
     private String course;
 
 
@@ -14,7 +14,7 @@ public class ModelTable {
 
     }
 
-    public ModelTable (String name, int id, String course){
+    public ModelTable (String name, Integer id, String course){
         this.name = name;
         this.id = id;
         this.course = course;

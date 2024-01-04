@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 
@@ -27,6 +29,7 @@ import javafx.scene.control.ChoiceBox;
 public class Controller{
     View view;
     Model model = new Model();
+    ModelTable modelTable = new ModelTable();
 
     public Controller(View view) {
         this.view = view;
@@ -190,6 +193,17 @@ public class Controller{
 
         return stringArray;
 
+    }
+
+    public ObservableList<ModelTable> getTableAdmin() {
+        ObservableList<ModelTable> table = FXCollections.observableArrayList();
+        HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
+
+        System.out.println(teacherNameHashMap);
+        
+        
+        table.add(new ModelTable("String", 4, "A"));
+        return table;
     }
 
 }

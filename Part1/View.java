@@ -380,7 +380,7 @@ public class View extends Application {
         Button button2 = new Button("Cancel");
         button2.setOnAction(e -> setAdminMainMenuScene());
 
-        ChoiceBox<String> subjectsRequired = new ChoiceBox();
+        ChoiceBox<String> subjectsRequired = new ChoiceBox<String>();
 
         // Will change when Sql implement
         subjectsRequired.getItems().addAll("test1", "Test2");
@@ -429,7 +429,7 @@ public class View extends Application {
         Button button2 = new Button("Cancel");
         button2.setOnAction(e -> setAdminMainMenuScene());
 
-        ChoiceBox<String> subjectsRequired = new ChoiceBox();
+        ChoiceBox<String> subjectsRequired = new ChoiceBox<String>();
 
         // Will change when Sql implement
         subjectsRequired.getItems().addAll("test1", "Test2");
@@ -473,16 +473,19 @@ public class View extends Application {
         nameColumn.setMinWidth(200);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<ModelTable, Double> priceColumn = new TableColumn<>("Price");
-        priceColumn.setMinWidth(200);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        TableColumn<ModelTable, Integer> quantityColumn = new TableColumn<>("Quantity");
+        TableColumn<ModelTable, Integer> quantityColumn = new TableColumn<>("ID");
         quantityColumn.setMinWidth(200);
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<ModelTable, String> priceColumn = new TableColumn<>("Course");
+        priceColumn.setMinWidth(200);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("Course"));
 
         table = new TableView<>();
+        table.setItems(controller.getTableAdmin());
         table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+
 
         Label welcome = new Label("View All Members");
 
