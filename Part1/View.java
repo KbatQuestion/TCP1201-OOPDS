@@ -38,6 +38,10 @@ public class View extends Application {
     sceneCreateCourse,
     sceneViewAllMembers,
     assignCoursesGui,
+    sceneTeacherViewSubjects,
+    viewMyStudents,
+    sceneViewMyCourse,
+    sceneStudentViewSubjects,
     sceneDeleteCourse;
 
     public static void main(String[] args) {
@@ -85,7 +89,7 @@ public class View extends Application {
 
         Button loginButton = new Button("Log in");
         loginButton.setOnAction(e -> controller.isCredentialValid(passTextField.getText(), namTextField.getText()));
-        // loginButton.setOnAction(e -> window.setScene(scene_StudentMainMenu));
+    
 
         GridPane.setConstraints(loginButton, 2, 5);
 
@@ -112,9 +116,12 @@ public class View extends Application {
 
         Label welcome = new Label("Welcome Student");
 
-        Button button1 = new Button("Button1");
-        Button button2 = new Button("Button2");
-        Button button3 = new Button("Button3");
+        Button button1 = new Button("View My Course");
+        button1.setOnAction(e -> viewStudentCourse());
+
+        Button button2 = new Button("Add a Class");
+        button2.setOnAction(e -> addStudemtCourse());
+    
         Button button4 = new Button("Log Out");
         button4.setOnAction(e -> logInMenu());
 
@@ -122,10 +129,10 @@ public class View extends Application {
 
         GridPane.setConstraints(button1, 2, 1);
         GridPane.setConstraints(button2, 2, 2);
-        GridPane.setConstraints(button3, 2, 3);
+
         GridPane.setConstraints(button4, 2, 4);
 
-        studentGrid.getChildren().addAll(button1, button2, button3, button4, welcome);
+        studentGrid.getChildren().addAll(button1, button2, button4, welcome);
 
         sceneStudentMainMenu = new Scene(studentGrid, 400, 250);
         window.setScene(sceneStudentMainMenu);
@@ -142,9 +149,13 @@ public class View extends Application {
 
         Label welcome = new Label("Welcome Teacher");
 
-        Button button1 = new Button("Button1");
-        Button button2 = new Button("Button2");
-        Button button3 = new Button("Button3");
+        Button button1 = new Button("View My Subjects");
+        button1.setOnAction(e -> teacherViewMySubjects());
+
+        Button button2 = new Button("View my Students");
+        button2.setOnAction(e -> viewMyStudents());
+
+
         Button button4 = new Button("Log Out");
         button4.setOnAction(e -> logInMenu());
 
@@ -152,10 +163,9 @@ public class View extends Application {
 
         GridPane.setConstraints(button1, 2, 1);
         GridPane.setConstraints(button2, 2, 2);
-        GridPane.setConstraints(button3, 2, 3);
         GridPane.setConstraints(button4, 2, 4);
 
-        teacherGrid.getChildren().addAll(button1, button2, button3, button4, welcome);
+        teacherGrid.getChildren().addAll(button1, button2, button4, welcome);
 
         sceneTeacherMainMenu = new Scene(teacherGrid, 400, 250);
         window.setScene(sceneTeacherMainMenu);
@@ -510,9 +520,154 @@ public class View extends Application {
         window.setScene(sceneViewAllMembers);
 
     }
+    public void teacherViewMySubjects() {
 
-    // Sample Data WIll be Chnage
-   
+        GridPane teacherViewMySubjectsGrid = new GridPane();
+        teacherViewMySubjectsGrid.setPadding(new Insets(10, 10, 10, 10));
+        teacherViewMySubjectsGrid.setVgap(20);
+        teacherViewMySubjectsGrid.setHgap(20);
+
+        Label welcome = new Label("Your Class");
+        Label classesLabel = new Label("Your Subjects");
+
+
+        Button button4 = new Button("Back");
+        button4.setOnAction(e -> logInMenu());
+
+        GridPane.setConstraints(welcome, 2, 0);
+        GridPane.setConstraints(classesLabel, 4, 1);
+
+        GridPane.setConstraints(button4, 2, 4);
+
+        teacherViewMySubjectsGrid.getChildren().addAll(button4, welcome,classesLabel);
+
+        sceneTeacherViewSubjects = new Scene(teacherViewMySubjectsGrid, 400, 250);
+        window.setScene(sceneTeacherViewSubjects);
+    }
+
     
+    public void viewMyStudents(){
+        TableView<ModelTable> table;
+
+        GridPane viewMembersGrid = new GridPane();
+        viewMembersGrid.setPadding(new Insets(10, 10, 10, 10));
+        viewMembersGrid.setVgap(20);
+        viewMembersGrid.setHgap(20);
+
+        TableColumn<ModelTable, String> nameColumn = new TableColumn<>("name");
+        nameColumn.setMinWidth(200);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+
+        TableColumn<ModelTable, Integer> quantityColumn = new TableColumn<>("ID");
+        quantityColumn.setMinWidth(200);
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<ModelTable, String> priceColumn = new TableColumn<>("Course");
+        priceColumn.setMinWidth(200);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("Course"));
+
+        table = new TableView<>();
+        table.setItems(controller.getTableAdmin());
+        table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
+
+
+        Label welcome = new Label("View All Members");
+
+        Button button1 = new Button("Button1");
+        Button button2 = new Button("Button2");
+        Button button3 = new Button("Button3");
+
+        Button button4 = new Button("Go Back");
+        button4.setOnAction(e -> setTeacherMainMenuScene());
+
+        GridPane.setConstraints(table, 2, 0);
+
+        GridPane.setConstraints(welcome, 2, 2);
+
+        GridPane.setConstraints(button1, 2, 3);
+        GridPane.setConstraints(button2, 2, 4);
+        GridPane.setConstraints(button3, 2, 5);
+        GridPane.setConstraints(button4, 2, 6);
+
+        viewMembersGrid.getChildren().addAll(button1, button2, button3, button4, welcome, table);
+
+        viewMyStudents = new Scene(viewMembersGrid, 600, 450);
+        window.setScene(viewMyStudents);
+
+    }
+
+    public void addStudemtCourse(){
+        String [] names = controller.populateLecureChoiceBox();
+
+
+
+        GridPane createCourseGrid = new GridPane();
+        createCourseGrid.setPadding(new Insets(10, 10, 10, 10));
+        createCourseGrid.setVgap(20);
+        createCourseGrid.setHgap(20);
+
+        Label label1 = new Label("Choose the course you want to add");
+    
+
+        TextField subjectCode = new TextField();
+
+        ChoiceBox<String> assignedLecture = new ChoiceBox<>();
+
+        Button button1 = new Button("Create a Courses");
+        button1.setOnAction(e -> controller.createCourse(subjectCode.getText(),assignedLecture));
+
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setStudentMainMenuScene());
+
+        
+
+        // // Will change when Sql implement
+        // subjectsRequired.getItems().addAll("test1", "Test2");
+        // creditHour.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+         assignedLecture.getItems().addAll(names);
+
+        GridPane.setConstraints(label1, 1, 0);
+        GridPane.setConstraints(assignedLecture, 1, 1);
+
+        GridPane.setConstraints(button1, 1, 2);
+        GridPane.setConstraints(button2, 2, 2);
+
+        createCourseGrid.getChildren().addAll(
+                label1,
+                assignedLecture,
+                button1,
+                button2);
+
+        sceneViewMyCourse = new Scene(createCourseGrid, 400, 220);
+        window.setTitle("Create Course");
+        window.setScene(sceneViewMyCourse);
+    }
+
+    public void viewStudentCourse(){
+
+        GridPane studentViewMySubjectsGrid = new GridPane();
+        studentViewMySubjectsGrid.setPadding(new Insets(10, 10, 10, 10));
+        studentViewMySubjectsGrid.setVgap(20);
+        studentViewMySubjectsGrid.setHgap(20);
+
+        Label welcome = new Label("Your Class");
+        Label classesLabel = new Label("Your Subjects");
+
+
+        Button button4 = new Button("Back");
+        button4.setOnAction(e -> setStudentMainMenuScene());
+
+        GridPane.setConstraints(welcome, 2, 0);
+        GridPane.setConstraints(classesLabel, 4, 1);
+
+        GridPane.setConstraints(button4, 2, 4);
+
+        studentViewMySubjectsGrid.getChildren().addAll(button4, welcome,classesLabel);
+
+        sceneStudentViewSubjects = new Scene(studentViewMySubjectsGrid, 400, 250);
+        window.setScene(sceneStudentViewSubjects);
+
+    } 
 
 }
