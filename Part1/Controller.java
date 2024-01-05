@@ -246,6 +246,9 @@ public class Controller {
         addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
         addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
 
+        model.setStudentRecordHashMap(studentAsignCourseHashMap);
+        model.setSubjectRecordHashMap(courseAssignStudentHashMap);
+
         System.out.println("Student Record" + studentAsignCourseHashMap);
 
         System.out.println("Course Recoed" + courseAssignStudentHashMap);
@@ -267,26 +270,41 @@ public class Controller {
     }
 
      public ObservableList<ModelTable> tableLectureSelectedCourse(ChoiceBox<String> selectedSubject) {
-        ObservableList<ModelTable> table = FXCollections.observableArrayList();
+        ObservableList<ModelTable> tableLecture = FXCollections.observableArrayList();
         
-        HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
         HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>(model.getSubjectRecordHashMap());
+        HashMap<Integer, String> studentNameHashMap = new HashMap<Integer, String>(model.getStudentNameHashMap());
         String selectedSubjectString = selectedSubject.getValue();
 
-        if (teacherAsignCourseHashMap.containsKey(model.currentUser)) {
-            ArrayList<String> arrayList = teacherAsignCourseHashMap.get(model.currentUser);
+        Set<Integer> integerSet = subjectRecordHashMap.get(selectedSubjectString);
 
-            // Iterate through the ArrayList to find the value
-            for (String element : arrayList) {
-                if (element.equals(selectedSubjectString)) {
-                    System.out.println("Value found in ArrayList with key " + model.currentUser + "Subject" + teacherAsignCourseHashMap);
-                    break;
-                }
-            }
-        } else {
-            System.out.println("Key not found in HashMap");
+        for (int element : integerSet) {
+            // Store the current element in a variable
+            int currentValue = element;
+            String name = studentNameHashMap.get(currentValue);
+            tableLecture.add(new ModelTable(name, currentValue, "A"));
+
+        
+            System.out.println(name);
+            System.out.println(currentValue);
+
+
+        
+
+
+
+        // for ( HashMap<String, Set<Integer>> entry : teacherNameHashMap.entrySet()) {
+
+        //     System.out.println(entry.getKey() + ": " + entry.getValue());
+        //     int id12 = entry.getKey();
+        //     String name12 = entry.getValue();
+        //     String course = "Lecture"; // this one for course, idk how to do
+        //     table.add(new ModelTable(name12, id12, course));
         }
+        
 
-        return table;
+  
+
+        return tableLecture;
     }
 }

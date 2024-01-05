@@ -547,8 +547,11 @@ public class View extends Application {
     }
 
     
-    public void viewMyStudents(){
+    public void viewMyStudents(ChoiceBox<String> userChoice)
+    {
+        ChoiceBox <String> selectedChoiceBox = userChoice;
         TableView<ModelTable> table;
+        
 
         GridPane viewMembersGrid = new GridPane();
         viewMembersGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -569,7 +572,7 @@ public class View extends Application {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("Course"));
 
         table = new TableView<>();
-        table.setItems(controller.getTableAdmin());
+        table.setItems(controller.tableLectureSelectedCourse(userChoice));
         table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
 
 
@@ -595,6 +598,8 @@ public class View extends Application {
 
         viewMyStudents = new Scene(viewMembersGrid, 700, 450);
         window.setScene(viewMyStudents);
+        controller.tableLectureSelectedCourse(userChoice);
+        
 
     }
 
@@ -685,7 +690,7 @@ public class View extends Application {
         ChoiceBox<String> courseAdded = new ChoiceBox<>();
 
         Button button1 = new Button("View Course Members");
-        button1.setOnAction(e -> controller.tableLectureSelectedCourse(courseAdded));
+        button1.setOnAction(e -> viewMyStudents(courseAdded));
 
 
         Button button2 = new Button("Cancel");
