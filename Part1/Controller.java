@@ -25,9 +25,7 @@ import javafx.scene.control.ChoiceBox;
 // For the Function just pass the argument/paramaters (you ask me!) to make a new Function
 // Make sure to Use Class
 
-
-
-public class Controller{
+public class Controller {
     View view;
     Model model = new Model();
     ModelTable modelTable = new ModelTable();
@@ -52,6 +50,7 @@ public class Controller{
 
                 if (tempTeacherPasswordHashMap.get(idInt).equals(password)) {
 
+                    model.currentUser = idInt;
                     view.setTeacherMainMenuScene();
                     System.out.println("Lecturer login successful");
                 }
@@ -66,6 +65,7 @@ public class Controller{
 
                 if (tempStudentPasswordHashMap.get(idInt).equals(password)) {
 
+                    model.currentUser = idInt;
                     view.setStudentMainMenuScene();
                     System.out.println("Student login successful");
                 }
@@ -95,9 +95,10 @@ public class Controller{
             CheckBox studentCheckBox) {
         int idInt = Integer.parseInt(id);
         if (teacherCheckBox.isSelected() && !studentCheckBox.isSelected()) {
-            HashMap<Integer, String> tempTacherPasswordHashMap = new HashMap<Integer, String>(model.getTeacherPasswordHashMap());
-            HashMap<Integer, String> tempTeacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
-
+            HashMap<Integer, String> tempTacherPasswordHashMap = new HashMap<Integer, String>(
+                    model.getTeacherPasswordHashMap());
+            HashMap<Integer, String> tempTeacherNameHashMap = new HashMap<Integer, String>(
+                    model.getTeacherNameHashMap());
 
             tempTeacherNameHashMap.put(idInt, name);
             tempTacherPasswordHashMap.put(idInt, password);
@@ -117,7 +118,7 @@ public class Controller{
             model.setStudentNameHashMap(tempStudentNameHashMap);
             model.setStudentPasswordHashMap(tempStudentPasswordHashMap);
 
-            view.errorMessenge("Lecture " + (name) + " Created Sucessfully", "User Created");
+            view.errorMessenge("Student " + (name) + " Created Sucessfully", "User Created");
         }
 
         if (studentCheckBox.isSelected() && teacherCheckBox.isSelected()) {
@@ -130,13 +131,13 @@ public class Controller{
         return str.matches("[0-9]+");
     }
 
-    public void  createCourse(String corseName,ChoiceBox<String> lectureName){
+    public void createCourse(String corseName, ChoiceBox<String> lectureName) {
 
         HashMap<Integer, String> NameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
         String lectureSelected = lectureName.getValue();
         Set<String> courseAvailablSet = new HashSet<String>(model.getCourseAvailablSet());
-        HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
-
+        HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(
+                model.getTeacherAsignCourseHashMap());
 
         Integer foundKey = getKeyByValue(NameHashMap, lectureSelected);
 
@@ -148,27 +149,18 @@ public class Controller{
             model.setTeacherAsignCourseHashMap(teacherAsignCourseHashMap);
             model.setCourseAvailablSet(courseAvailablSet);
 
-
-
-
-
-
-
-
-
         } else {
             System.out.println("Value '" + lectureSelected + "' not found in the HashMap");
         }
 
-
-
         System.out.println("Course Name " + corseName);
         System.out.println("Lecture Name " + lectureName.getValue());
-        System.out.println("Array "+teacherAsignCourseHashMap);
+        System.out.println("Array " + teacherAsignCourseHashMap);
+        view.errorMessenge("Course " + (corseName) + " Created Sucessfully", "Course Created");
 
     }
 
-       private static Integer getKeyByValue(HashMap<Integer, String> map, String value) {
+    private static Integer getKeyByValue(HashMap<Integer, String> map, String value) {
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             if (value.equals(entry.getValue())) {
                 return entry.getKey();
@@ -178,10 +170,8 @@ public class Controller{
         return null;
     }
 
-
-
     public String[] populateLecureChoiceBox() {
-        
+
         HashMap<Integer, String> TeacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
 
         int size = TeacherNameHashMap.size();
@@ -197,25 +187,68 @@ public class Controller{
 
     }
 
+    public String[] populateCourseChoiceBox() {
+
+        Set<String> courseAvailablSet = new HashSet<String>(model.getCourseAvailablSet());
+        int size = courseAvailablSet.size();
+        String coursearray[] = new String[size];
+
+        System.arraycopy(courseAvailablSet.toArray(), 0, coursearray, 0, size);
+        String[] stringArray = coursearray;
+        return stringArray;
+    }
+
     public ObservableList<ModelTable> getTableAdmin() {
         ObservableList<ModelTable> table = FXCollections.observableArrayList();
         HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
-        HashMap<Integer, ArrayList<String>> teacherCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
-
-        System.out.println(teacherCourseHashMap);
-        
-        
-        table.add(new ModelTable("String", 4, "A"));
+        HashMap<Integer, String> studentNameHashMap = new HashMap<Integer, String>(model.getStudentNameHashMap());
 
         for (HashMap.Entry<Integer, String> entry : teacherNameHashMap.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
             int id12 = entry.getKey();
             String name12 = entry.getValue();
-            String course = "A";        //this one for course, idk how to do
+            String course = "Lecture"; // this one for course, idk how to do
+            table.add(new ModelTable(name12, id12, course));
+        }
+
+        for (HashMap.Entry<Integer, String> entry : studentNameHashMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+            int id12 = entry.getKey();
+            String name12 = entry.getValue();
+            String course = "Student";
             table.add(new ModelTable(name12, id12, course));
         }
 
         return table;
     }
 
+    public void addStudentSubjects(ChoiceBox<String> courseAdded) {
+        HashMap<Integer, Set<String>> studentAsignCourseHashMap = new HashMap<Integer, Set<String>>(
+                model.getStudentRecordHashMap());
+        HashMap<String, Set<Integer>> courseAssignStudentHashMap = new HashMap<String, Set<Integer>>(
+                model.getSubjectRecordHashMap());
+        String course = courseAdded.getValue();
+
+        addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
+        addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
+
+        System.out.println("Student Record" + studentAsignCourseHashMap);
+
+        System.out.println("Course Recoed" + courseAssignStudentHashMap);
+
+    }
+
+    private static void addToHashMap(HashMap<String, Set<Integer>> hashMap, String key, int value) {
+        hashMap.putIfAbsent(key, new HashSet<>());
+
+        Set<Integer> set = hashMap.get(key);
+        set.add(value);
+    }
+
+    private static void addToHashMapStudent(HashMap<Integer, Set<String>> hashMap, int key, String value) {
+        hashMap.putIfAbsent(key, new HashSet<>());
+
+        Set<String> set = hashMap.get(key);
+        set.add(value);
+    }
 }

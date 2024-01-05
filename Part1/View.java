@@ -120,7 +120,7 @@ public class View extends Application {
         button1.setOnAction(e -> viewStudentCourse());
 
         Button button2 = new Button("Add a Class");
-        button2.setOnAction(e -> addStudemtCourse());
+        button2.setOnAction(e -> addStudentCourse());
     
         Button button4 = new Button("Log Out");
         button4.setOnAction(e -> logInMenu());
@@ -488,9 +488,9 @@ public class View extends Application {
         quantityColumn.setMinWidth(200);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<ModelTable, String> priceColumn = new TableColumn<>("Course");
+        TableColumn<ModelTable, String> priceColumn = new TableColumn<>("Usertype");
         priceColumn.setMinWidth(200);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("Course"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
 
         table = new TableView<>();
         table.setItems(controller.getTableAdmin());
@@ -532,7 +532,7 @@ public class View extends Application {
 
 
         Button button4 = new Button("Back");
-        button4.setOnAction(e -> logInMenu());
+        button4.setOnAction(e -> setTeacherMainMenuScene());
 
         GridPane.setConstraints(welcome, 2, 0);
         GridPane.setConstraints(classesLabel, 4, 1);
@@ -597,8 +597,8 @@ public class View extends Application {
 
     }
 
-    public void addStudemtCourse(){
-        String [] names = controller.populateLecureChoiceBox();
+    public void addStudentCourse(){
+        String [] courseStrings = controller.populateCourseChoiceBox();
 
 
 
@@ -610,32 +610,28 @@ public class View extends Application {
         Label label1 = new Label("Choose the course you want to add");
     
 
-        TextField subjectCode = new TextField();
-
-        ChoiceBox<String> assignedLecture = new ChoiceBox<>();
+        ChoiceBox<String> courseAdded = new ChoiceBox<>();
 
         Button button1 = new Button("Create a Courses");
-        button1.setOnAction(e -> controller.createCourse(subjectCode.getText(),assignedLecture));
+        button1.setOnAction(e -> controller.addStudentSubjects(courseAdded));
+
 
         Button button2 = new Button("Cancel");
         button2.setOnAction(e -> setStudentMainMenuScene());
 
         
 
-        // // Will change when Sql implement
-        // subjectsRequired.getItems().addAll("test1", "Test2");
-        // creditHour.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-         assignedLecture.getItems().addAll(names);
+         courseAdded.getItems().addAll(courseStrings);
 
         GridPane.setConstraints(label1, 1, 0);
-        GridPane.setConstraints(assignedLecture, 1, 1);
+        GridPane.setConstraints(courseAdded, 1, 1);
 
         GridPane.setConstraints(button1, 1, 2);
         GridPane.setConstraints(button2, 2, 2);
 
         createCourseGrid.getChildren().addAll(
                 label1,
-                assignedLecture,
+                courseAdded,
                 button1,
                 button2);
 

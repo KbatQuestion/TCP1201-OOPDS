@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Model {
-    // //private HashMap<String, ArrayList<String>> teacherLoginMap = new HashMap<String, ArrayList<String>>();
-    // //private HashMap<String, ArrayList<String>> studentLoginMap = new HashMap<String, ArrayList<String>>();
+    // //private HashMap<String, ArrayList<String>> teacherLoginMap = new
+    // HashMap<String, ArrayList<String>>();
+    // //private HashMap<String, ArrayList<String>> studentLoginMap = new
+    // HashMap<String, ArrayList<String>>();
 
     // // Student Hashmap key = id
     // // name
@@ -23,37 +25,34 @@ public class Model {
     // // Admin/Teacher Hasmap
 
     // // key = course name value = id
-    // // Course and  Register to the Lecture 
+    // // Course and Register to the Lecture
     // // Course with Register Student
-
-    
 
     // // Getter
     // public HashMap<String, ArrayList<String>> getTeacherHashMap() {
-    //     return teacherLoginMap;
+    // return teacherLoginMap;
     // }
 
     // // Setter
-    // public void setTeacherHashMap(HashMap<String, ArrayList<String>> newTeacherLoginMap) {
-    //     this.teacherLoginMap = newTeacherLoginMap;
+    // public void setTeacherHashMap(HashMap<String, ArrayList<String>>
+    // newTeacherLoginMap) {
+    // this.teacherLoginMap = newTeacherLoginMap;
     // }
-    
 
     // // Getter
     // public HashMap<String, ArrayList<String>> getStudentHashMap() {
-    //     return studentLoginMap;
+    // return studentLoginMap;
     // }
 
     // // Setter
-    // public void setStudentHashMap(HashMap<String, ArrayList<String>> newstudentLoginMap) {
-    //     this.studentLoginMap = newstudentLoginMap;
+    // public void setStudentHashMap(HashMap<String, ArrayList<String>>
+    // newstudentLoginMap) {
+    // this.studentLoginMap = newstudentLoginMap;
     // }
 
+    // Old Code Above will be Remove
 
-    //Old Code Above will be Remove
-
-
-     // Student Hashmap key = id
+    // Student Hashmap key = id
     // name
     // password
     // Student Course taken
@@ -67,138 +66,118 @@ public class Model {
     // Admin/Teacher Hasmap
 
     // key = course name value = id
-    // Course and  Register to the Lecture 
+    // Course and Register to the Lecture
     // Course with Register Student
     // Course with Pre-reqsite //Implement Later
     // Course Credit Hour //Implement Later
 
-    //Sets 
-    //Course available to be registerd
+    // Sets
+    // Course available to be registerd
 
+    public Integer currentUser;
 
-    //teacher Map
+    // teacher Map
+
     private HashMap<Integer, String> teacherPasswordHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>();
 
-
     private HashMap<Integer, String> studentPasswordHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, String> studentNameHashMap = new HashMap<Integer, String>();
-    private HashMap<Integer, ArrayList<String>> studentAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>();
+    private HashMap<Integer, Set<String>> studentRecordHashMap = new HashMap<Integer, Set<String>>();
 
-    private HashMap<String, Integer> assignLectureHashMap = new HashMap<String, Integer>();
-    private HashMap<String, ArrayList<Integer>> assignStudentHashMap = new HashMap<String, ArrayList<Integer>>();
+    private HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>();
+    private HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>();
     private Set<String> courseAvailablSet = new HashSet<String>();
 
-    
-    //Getter
+    // Getter
     public HashMap<Integer, String> getTeacherPasswordHashMap() {
-         return teacherPasswordHashMap;
-     }
+        return teacherPasswordHashMap;
+    }
 
     // Setter
     public void setTeacherPasswordHashMap(HashMap<Integer, String> newTeacherPaswordHashMap) {
         this.teacherPasswordHashMap = newTeacherPaswordHashMap;
-     }
+    }
 
-
-    //Getter
+    // Getter
     public HashMap<Integer, String> getTeacherNameHashMap() {
-         return teacherNameHashMap;
-     }
+        return teacherNameHashMap;
+    }
 
     // Setter
     public void setTeacherNameHashMap(HashMap<Integer, String> newTeacherNameHashMap) {
         this.teacherNameHashMap = newTeacherNameHashMap;
-     }
-
+    }
 
     // Getter
     public HashMap<Integer, ArrayList<String>> getTeacherAsignCourseHashMap() {
         return teacherAsignCourseHashMap;
-     }
+    }
 
     // Setter
     public void setTeacherAsignCourseHashMap(HashMap<Integer, ArrayList<String>> newTeacherAsignCourseHashMap) {
-         this.teacherAsignCourseHashMap = newTeacherAsignCourseHashMap;
-     }
+        this.teacherAsignCourseHashMap = newTeacherAsignCourseHashMap;
+    }
 
-
-    //Getter
+    // Getter
     public HashMap<Integer, String> getStudentPasswordHashMap() {
-         return studentPasswordHashMap;
-     }
+        return studentPasswordHashMap;
+    }
 
     // Setter
     public void setStudentPasswordHashMap(HashMap<Integer, String> newStudentPaswordHashMap) {
         this.studentPasswordHashMap = newStudentPaswordHashMap;
-     }
+    }
 
-
-    //Getter
+    // Getter
     public HashMap<Integer, String> getStudentNameHashMap() {
-         return studentNameHashMap;
-     }
+        return studentNameHashMap;
+    }
 
     // Setter
     public void setStudentNameHashMap(HashMap<Integer, String> newStudentNameHashMap) {
         this.studentNameHashMap = newStudentNameHashMap;
-     }
-
+    }
 
     // Getter
-    public HashMap<Integer, ArrayList<String>> getStudentAsignCourseHashMap() {
-        return studentAsignCourseHashMap;
-     }
-
-    // Setter
-    public void setStudentAsignCourseHashMap(HashMap<Integer, ArrayList<String>> newStudentAsignCourseHashMap) {
-         this.studentAsignCourseHashMap = newStudentAsignCourseHashMap;
-     }
-
-
-
-      //Getter
-    public HashMap<String, Integer> getAssignLectureHashMap() {
-         return assignLectureHashMap;
-     }
-
-    // Setter
-    public void setAssignLectureHashMap(HashMap<String, Integer> newAssignLectureHashMap) {
-        this.assignLectureHashMap = newAssignLectureHashMap;
+    public HashMap<Integer, Set<String>> getStudentRecordHashMap() {
+        return studentRecordHashMap;
     }
 
-
-    //Getter
-    public HashMap<String, ArrayList<Integer>> getAssignStudentHashMap() {
-         return assignStudentHashMap;
-     }
-
     // Setter
-    public void setAssignStudentHashMap(HashMap<String, ArrayList<Integer>> newAssignStudentHashMapp) {
-        this.assignStudentHashMap = newAssignStudentHashMapp;
+    public void setStudentRecordHashMap(HashMap<Integer, Set<String>> newStudentRecordHashMap) {
+        this.studentRecordHashMap = newStudentRecordHashMap;
     }
 
+    // Getter
+    public HashMap<String, Integer> getLectureRecordHashMap() {
+        return lectureRecordHashMap;
+    }
 
-     //Getter
+    // Setter
+    public void setLectureRecordHashMap(HashMap<String, Integer> newAssignLectureHashMap) {
+        this.lectureRecordHashMap = newAssignLectureHashMap;
+    }
+
+    // Getter
+    public HashMap<String, Set<Integer>> getSubjectRecordHashMap() {
+        return subjectRecordHashMap;
+    }
+
+    // Setter
+    public void setSubjectRecordHashMap(HashMap<String, Set<Integer>> newAssignStudentHashMapp) {
+        this.subjectRecordHashMap = newAssignStudentHashMapp;
+    }
+
+    // Getter
     public Set<String> getCourseAvailablSet() {
-         return courseAvailablSet;
-     }
+        return courseAvailablSet;
+    }
 
     // Setter
     public void setCourseAvailablSet(Set<String> newCourseAvailablSet) {
         this.courseAvailablSet = newCourseAvailablSet;
-    }    
-
-
-
-
-     
-
-
-
-
-
-    
+    }
 
 }
