@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.security.auth.Subject;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
@@ -198,6 +200,18 @@ public class Controller {
         return stringArray;
     }
 
+    public String[] populateLectureCourseChoiceBox() {
+
+        HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
+        ArrayList<String> arrayList = teacherAsignCourseHashMap.get(model.currentUser);
+        String[] stringArray = new String[arrayList.size()];
+        stringArray = arrayList.toArray(stringArray);
+   
+      
+        return stringArray;
+    }
+
+
     public ObservableList<ModelTable> getTableAdmin() {
         ObservableList<ModelTable> table = FXCollections.observableArrayList();
         HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
@@ -250,5 +264,29 @@ public class Controller {
 
         Set<String> set = hashMap.get(key);
         set.add(value);
+    }
+
+     public ObservableList<ModelTable> tableLectureSelectedCourse(ChoiceBox<String> selectedSubject) {
+        ObservableList<ModelTable> table = FXCollections.observableArrayList();
+        
+        HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
+        HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>(model.getSubjectRecordHashMap());
+        String selectedSubjectString = selectedSubject.getValue();
+
+        if (teacherAsignCourseHashMap.containsKey(model.currentUser)) {
+            ArrayList<String> arrayList = teacherAsignCourseHashMap.get(model.currentUser);
+
+            // Iterate through the ArrayList to find the value
+            for (String element : arrayList) {
+                if (element.equals(selectedSubjectString)) {
+                    System.out.println("Value found in ArrayList with key " + model.currentUser + "Subject" + teacherAsignCourseHashMap);
+                    break;
+                }
+            }
+        } else {
+            System.out.println("Key not found in HashMap");
+        }
+
+        return table;
     }
 }

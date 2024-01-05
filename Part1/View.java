@@ -42,6 +42,7 @@ public class View extends Application {
     viewMyStudents,
     sceneViewMyCourse,
     sceneStudentViewSubjects,
+    sceneViewCourseTable,
     sceneDeleteCourse;
 
     public static void main(String[] args) {
@@ -153,7 +154,7 @@ public class View extends Application {
         button1.setOnAction(e -> teacherViewMySubjects());
 
         Button button2 = new Button("View my Students");
-        button2.setOnAction(e -> viewMyStudents());
+        button2.setOnAction(e -> viewCourseTable());
 
 
         Button button4 = new Button("Log Out");
@@ -592,7 +593,7 @@ public class View extends Application {
 
         viewMembersGrid.getChildren().addAll(button1, button2, button3, button4, welcome, table);
 
-        viewMyStudents = new Scene(viewMembersGrid, 600, 450);
+        viewMyStudents = new Scene(viewMembersGrid, 700, 450);
         window.setScene(viewMyStudents);
 
     }
@@ -665,5 +666,50 @@ public class View extends Application {
         window.setScene(sceneStudentViewSubjects);
 
     } 
+
+
+
+    public void viewCourseTable(){
+        String [] courseStrings = controller.populateLectureCourseChoiceBox();
+
+
+
+        GridPane createCourseGrid = new GridPane();
+        createCourseGrid.setPadding(new Insets(10, 10, 10, 10));
+        createCourseGrid.setVgap(20);
+        createCourseGrid.setHgap(20);
+
+        Label label1 = new Label("Choose the course you want to View");
+    
+
+        ChoiceBox<String> courseAdded = new ChoiceBox<>();
+
+        Button button1 = new Button("View Course Members");
+        button1.setOnAction(e -> controller.tableLectureSelectedCourse(courseAdded));
+
+
+        Button button2 = new Button("Cancel");
+        button2.setOnAction(e -> setStudentMainMenuScene());
+
+        
+
+         courseAdded.getItems().addAll(courseStrings);
+
+        GridPane.setConstraints(label1, 1, 0);
+        GridPane.setConstraints(courseAdded, 1, 1);
+
+        GridPane.setConstraints(button1, 1, 2);
+        GridPane.setConstraints(button2, 2, 2);
+
+        createCourseGrid.getChildren().addAll(
+                label1,
+                courseAdded,
+                button1,
+                button2);
+
+        sceneViewCourseTable = new Scene(createCourseGrid, 400, 220);
+        window.setTitle("Show Members");
+        window.setScene(sceneViewCourseTable);
+    }
 
 }
