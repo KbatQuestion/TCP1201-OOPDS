@@ -1,6 +1,7 @@
 package Part1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -96,6 +97,7 @@ public class Controller{
         if (teacherCheckBox.isSelected() && !studentCheckBox.isSelected()) {
             HashMap<Integer, String> tempTacherPasswordHashMap = new HashMap<Integer, String>(model.getTeacherPasswordHashMap());
             HashMap<Integer, String> tempTeacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
+
 
             tempTeacherNameHashMap.put(idInt, name);
             tempTacherPasswordHashMap.put(idInt, password);
@@ -198,11 +200,21 @@ public class Controller{
     public ObservableList<ModelTable> getTableAdmin() {
         ObservableList<ModelTable> table = FXCollections.observableArrayList();
         HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
+        HashMap<Integer, ArrayList<String>> teacherCourseHashMap = new HashMap<Integer, ArrayList<String>>(model.getTeacherAsignCourseHashMap());
 
-        System.out.println(teacherNameHashMap);
+        System.out.println(teacherCourseHashMap);
         
         
         table.add(new ModelTable("String", 4, "A"));
+
+        for (HashMap.Entry<Integer, String> entry : teacherNameHashMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+            int id12 = entry.getKey();
+            String name12 = entry.getValue();
+            String course = "A";        //this one for course, idk how to do
+            table.add(new ModelTable(name12, id12, course));
+        }
+
         return table;
     }
 
