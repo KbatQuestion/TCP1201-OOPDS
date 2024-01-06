@@ -6,52 +6,44 @@ public class ModelTable {
     private Integer id;
     private String course;
 
-
-    public ModelTable(){
+    public ModelTable() {
         this.name = "";
         this.id = 0;
         this.course = "";
 
     }
 
-    public ModelTable (String name, Integer id, String course){
+    public ModelTable(String name, Integer id, String course) {
         this.name = name;
         this.id = id;
         this.course = course;
 
     }
 
-    public String getName(){
+    public String getName() {
         return name;
 
     }
 
-    public void setName (String name){
-        this.name =name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getId(){
+    public double getId() {
         return id;
     }
 
-    public void setId (Integer id){
-        this.id =id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getCourse(){
+    public String getCourse() {
         return course;
 
     }
 
-    public void setCourse (String course){
-        this.course =course;
+    public void setCourse(String course) {
+        this.course = course;
     }
 
-   
-    
-
-
-
-
-    
 }

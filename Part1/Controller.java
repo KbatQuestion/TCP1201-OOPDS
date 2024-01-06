@@ -145,19 +145,16 @@ public class Controller {
 
         Integer foundKey = getKeyByValue(NameHashMap, lectureSelected);
 
-       
-        if(!courseAvailablSet.contains(corseName)){
+        if (!courseAvailablSet.contains(corseName)) {
             if (foundKey != null) {
                 System.out.println("Key for value '" + lectureSelected + "': " + foundKey);
                 courseAvailablSet.add(corseName);
                 teacherAsignCourseHashMap.computeIfAbsent(foundKey, k -> new ArrayList<>()).add(corseName);
                 lectureRecordHashMap.put(corseName, foundKey);
-                
-                
+
                 model.setTeacherAsignCourseHashMap(teacherAsignCourseHashMap);
                 model.setCourseAvailablSet(courseAvailablSet);
                 model.setLectureRecordHashMap(lectureRecordHashMap);
-        
 
             } else {
                 System.out.println("Value '" + lectureSelected + "' not found in the HashMap");
@@ -168,12 +165,11 @@ public class Controller {
             System.out.println("Array " + teacherAsignCourseHashMap);
             view.errorMessenge("Course " + (corseName) + " Created Sucessfully", "Course Created");
         }
-        
-        else{
+
+        else {
             view.errorMessenge("Course Existed", "Duplicate Course");
         }
 
-        
     }
 
     private static Integer getKeyByValue(HashMap<Integer, String> map, String value) {

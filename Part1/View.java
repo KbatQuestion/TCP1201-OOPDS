@@ -493,7 +493,7 @@ public class View extends Application {
         Label welcome = new Label("View All User");
 
         Button button1 = new Button("View by Courses");
-        button1.setOnAction(e -> viewAdminCourseTable() );
+        button1.setOnAction(e -> viewAdminCourseTable());
 
         Button button4 = new Button("Go Back");
         button4.setOnAction(e -> setAdminMainMenuScene());
@@ -503,10 +503,10 @@ public class View extends Application {
         GridPane.setConstraints(welcome, 2, 1);
 
         GridPane.setConstraints(button1, 2, 3);
-      
+
         GridPane.setConstraints(button4, 2, 6);
 
-        viewMembersGrid.getChildren().addAll(button1,button4, welcome, table);
+        viewMembersGrid.getChildren().addAll(button1, button4, welcome, table);
 
         sceneViewAllMembers = new Scene(viewMembersGrid, 700, 450);
         window.setScene(sceneViewAllMembers);
@@ -538,7 +538,7 @@ public class View extends Application {
     }
 
     public void viewMyStudents(ChoiceBox<String> userChoice) {
-    
+
         TableView<ModelTable> table;
 
         GridPane viewMembersGrid = new GridPane();
@@ -560,7 +560,6 @@ public class View extends Application {
 
         Label welcome = new Label("View All User");
 
-
         Button button4 = new Button("Go Back");
         button4.setOnAction(e -> setTeacherMainMenuScene());
 
@@ -568,14 +567,12 @@ public class View extends Application {
 
         GridPane.setConstraints(welcome, 2, 2);
 
-      
         GridPane.setConstraints(button4, 2, 6);
 
         viewMembersGrid.getChildren().addAll(button4, welcome, table);
 
         viewMyStudents = new Scene(viewMembersGrid, 550, 450);
         window.setScene(viewMyStudents);
-    
 
     }
 
@@ -678,7 +675,7 @@ public class View extends Application {
         window.setScene(sceneViewCourseTable);
     }
 
-     public void viewAdminCourseTable() {
+    public void viewAdminCourseTable() {
         String[] courseStrings = controller.populateCourseChoiceBox();
 
         GridPane createCourseGrid = new GridPane();
@@ -716,7 +713,7 @@ public class View extends Application {
     }
 
     public void viewAdminStudents(ChoiceBox<String> userChoice) {
-    
+
         TableView<ModelTable> table;
 
         GridPane viewMembersGrid = new GridPane();
@@ -738,7 +735,7 @@ public class View extends Application {
 
         table = new TableView<>();
         table.setItems(controller.tableAdminSelectedCourse(userChoice));
-        table.getColumns().addAll(nameColumn, idColumn,userColumn);
+        table.getColumns().addAll(nameColumn, idColumn, userColumn);
 
         Label welcome = new Label("View All User");
 

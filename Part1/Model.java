@@ -76,8 +76,6 @@ public class Model {
 
     public Integer currentUser;
 
-
-
     private HashMap<Integer, String> teacherPasswordHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>();
@@ -86,9 +84,8 @@ public class Model {
     private HashMap<Integer, String> studentNameHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, Set<String>> studentRecordHashMap = new HashMap<Integer, Set<String>>();
 
-    //remove later
+    // remove later
     private HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>();
-
 
     private HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>();
     private Set<String> courseAvailablSet = new HashSet<String>();
