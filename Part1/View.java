@@ -44,6 +44,7 @@ public class View extends Application {
             sceneViewCourseTable,
             sceneViewAdminCourseTable,
             viewviewAdminStudents,
+            sceneViewAddCourse,
             sceneDeleteCourse;
 
     public static void main(String[] args) {
@@ -209,7 +210,7 @@ public class View extends Application {
         GridPane.setConstraints(button5, 2, 5);
         GridPane.setConstraints(button6, 2, 6);
 
-        adminGrid.getChildren().addAll(button1, button2, button3, button4, button5, button6, welcome);
+        adminGrid.getChildren().addAll(button1, button2, button5, button6, welcome);
 
         sceneAdminMainMenu = new Scene(adminGrid, 400, 350);
         window.setScene(sceneAdminMainMenu);
@@ -315,7 +316,7 @@ public class View extends Application {
         Label label2 = new Label("Course Code");
         Label label3 = new Label("Credit Hour");
         Label label4 = new Label("Pre-Requsite");
-        Label label5 = new Label("Lecture");
+        Label label5 = new Label("Lecturer");
 
         TextField subjectCode = new TextField();
 
@@ -487,9 +488,9 @@ public class View extends Application {
 
         table = new TableView<>();
         table.setItems(controller.getTableAdmin());
-        table.getColumns().addAll(nameColumn, userTypeColumn, idColumn);
+        table.getColumns().addAll(nameColumn, idColumn, userTypeColumn);
 
-        Label welcome = new Label("View All Members");
+        Label welcome = new Label("View All User");
 
         Button button1 = new Button("View by Courses");
         button1.setOnAction(e -> viewAdminCourseTable() );
@@ -557,11 +558,8 @@ public class View extends Application {
         table.setItems(controller.tableLectureSelectedCourse(userChoice));
         table.getColumns().addAll(nameColumn, idColumn);
 
-        Label welcome = new Label("View All Members");
+        Label welcome = new Label("View All User");
 
-        Button button1 = new Button("Button1");
-        Button button2 = new Button("Button2");
-        Button button3 = new Button("Button3");
 
         Button button4 = new Button("Go Back");
         button4.setOnAction(e -> setTeacherMainMenuScene());
@@ -570,16 +568,14 @@ public class View extends Application {
 
         GridPane.setConstraints(welcome, 2, 2);
 
-        GridPane.setConstraints(button1, 2, 3);
-        GridPane.setConstraints(button2, 2, 4);
-        GridPane.setConstraints(button3, 2, 5);
+      
         GridPane.setConstraints(button4, 2, 6);
 
-        viewMembersGrid.getChildren().addAll(button1, button2, button3, button4, welcome, table);
+        viewMembersGrid.getChildren().addAll(button4, welcome, table);
 
-        viewMyStudents = new Scene(viewMembersGrid, 700, 450);
+        viewMyStudents = new Scene(viewMembersGrid, 550, 450);
         window.setScene(viewMyStudents);
-        controller.tableLectureSelectedCourse(userChoice);
+    
 
     }
 
@@ -595,7 +591,7 @@ public class View extends Application {
 
         ChoiceBox<String> courseAdded = new ChoiceBox<>();
 
-        Button button1 = new Button("Create a Courses");
+        Button button1 = new Button("Register Subject");
         button1.setOnAction(e -> controller.addStudentSubjects(courseAdded));
 
         Button button2 = new Button("Cancel");
@@ -615,9 +611,9 @@ public class View extends Application {
                 button1,
                 button2);
 
-        sceneViewMyCourse = new Scene(createCourseGrid, 400, 220);
+        sceneViewAddCourse = new Scene(createCourseGrid, 400, 220);
         window.setTitle("Create Course");
-        window.setScene(sceneViewMyCourse);
+        window.setScene(sceneViewAddCourse);
     }
 
     public void viewStudentCourse() {
@@ -742,16 +738,16 @@ public class View extends Application {
 
         table = new TableView<>();
         table.setItems(controller.tableAdminSelectedCourse(userChoice));
-        table.getColumns().addAll(nameColumn, userColumn, idColumn);
+        table.getColumns().addAll(nameColumn, idColumn,userColumn);
 
-        Label welcome = new Label("View All Members");
+        Label welcome = new Label("View All User");
 
         Button button1 = new Button("Button1");
         Button button2 = new Button("Button2");
         Button button3 = new Button("Button3");
 
         Button button4 = new Button("Go Back");
-        button4.setOnAction(e -> setTeacherMainMenuScene());
+        button4.setOnAction(e -> setAdminMainMenuScene());
 
         GridPane.setConstraints(table, 2, 0);
 

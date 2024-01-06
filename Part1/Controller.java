@@ -107,7 +107,7 @@ public class Controller {
             model.setTeacherNameHashMap(tempTeacherNameHashMap);
             model.setTeacherPasswordHashMap(tempTacherPasswordHashMap);
 
-            view.errorMessenge("Lecture " + (name) + " Created Sucessfully", "User Created");
+            view.errorMessenge("Lecturer " + (name) + " Created Sucessfully", "User Created");
 
         }
 
@@ -145,27 +145,35 @@ public class Controller {
 
         Integer foundKey = getKeyByValue(NameHashMap, lectureSelected);
 
-        // Check if the value exists in the HashMap
-        if (foundKey != null) {
-            System.out.println("Key for value '" + lectureSelected + "': " + foundKey);
-            courseAvailablSet.add(corseName);
-            teacherAsignCourseHashMap.computeIfAbsent(foundKey, k -> new ArrayList<>()).add(corseName);
-            lectureRecordHashMap.put(corseName, foundKey);
-            
-            
-            model.setTeacherAsignCourseHashMap(teacherAsignCourseHashMap);
-            model.setCourseAvailablSet(courseAvailablSet);
-            model.setLectureRecordHashMap(lectureRecordHashMap);
+       
+        if(!courseAvailablSet.contains(corseName)){
+            if (foundKey != null) {
+                System.out.println("Key for value '" + lectureSelected + "': " + foundKey);
+                courseAvailablSet.add(corseName);
+                teacherAsignCourseHashMap.computeIfAbsent(foundKey, k -> new ArrayList<>()).add(corseName);
+                lectureRecordHashMap.put(corseName, foundKey);
+                
+                
+                model.setTeacherAsignCourseHashMap(teacherAsignCourseHashMap);
+                model.setCourseAvailablSet(courseAvailablSet);
+                model.setLectureRecordHashMap(lectureRecordHashMap);
+        
 
-        } else {
-            System.out.println("Value '" + lectureSelected + "' not found in the HashMap");
+            } else {
+                System.out.println("Value '" + lectureSelected + "' not found in the HashMap");
+            }
+
+            System.out.println("Course Name " + corseName);
+            System.out.println("Lecture Name " + lectureName.getValue());
+            System.out.println("Array " + teacherAsignCourseHashMap);
+            view.errorMessenge("Course " + (corseName) + " Created Sucessfully", "Course Created");
+        }
+        
+        else{
+            view.errorMessenge("Duplicate Course Detected", "Duplicate Course");
         }
 
-        System.out.println("Course Name " + corseName);
-        System.out.println("Lecture Name " + lectureName.getValue());
-        System.out.println("Array " + teacherAsignCourseHashMap);
-        view.errorMessenge("Course " + (corseName) + " Created Sucessfully", "Course Created");
-
+        
     }
 
     private static Integer getKeyByValue(HashMap<Integer, String> map, String value) {
@@ -253,6 +261,7 @@ public class Controller {
 
         model.setStudentRecordHashMap(studentAsignCourseHashMap);
         model.setSubjectRecordHashMap(courseAssignStudentHashMap);
+        view.errorMessenge("Sucessfully Registered for " + course, "Register Sucess");
 
         System.out.println("Student Record" + studentAsignCourseHashMap);
 
@@ -300,7 +309,7 @@ public class Controller {
 
     public ObservableList<ModelTable> tableAdminSelectedCourse(ChoiceBox<String> selectedSubject) {
 
-         ObservableList<ModelTable> tableLecture = FXCollections.observableArrayList();
+        ObservableList<ModelTable> tableLecture = FXCollections.observableArrayList();
 
         HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>(
                 model.getSubjectRecordHashMap());
@@ -308,30 +317,25 @@ public class Controller {
         HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>(model.getLectureRecordHashMap());
         HashMap<Integer, String> lectureNameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
 
-
         String selectedSubjectString = selectedSubject.getValue();
         Set<Integer> integerSet = subjectRecordHashMap.get(selectedSubjectString);
 
         Integer lectureId = lectureRecordHashMap.get(selectedSubjectString);
-        String  lecturename = lectureNameHashMap.get(lectureId);
+        String lecturename = lectureNameHashMap.get(lectureId);
 
-
-        
         tableLecture.add(new ModelTable(lecturename, lectureId, "Lecture"));
-
 
         for (int element : integerSet) {
             // Store the current element in a variable
             int currentValue = element;
             String name = studentNameHashMap.get(currentValue);
-            tableLecture.add(new ModelTable(name,currentValue,"Student"));
+            tableLecture.add(new ModelTable(name, currentValue, "Student"));
 
             System.out.println(name);
             System.out.println(currentValue);
-
         }
 
         return tableLecture;
- 
+
     }
 }
