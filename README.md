@@ -6,6 +6,13 @@
 2) Open the **Part1** Folder
 3) Run the **View.java**
 
+## Admin Credentials
+
+Id = 0000
+Password = 0000
+
+ 
+
 ## Part 1 Features Implemented
 
 1) Admin can create students and lecturers. [1m] :heavy_check_mark:

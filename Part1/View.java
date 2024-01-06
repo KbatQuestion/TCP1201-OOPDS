@@ -258,7 +258,7 @@ public class View extends Application {
         TextField password = new TextField();
 
         CheckBox studentCheckBox = new CheckBox("Student");
-        CheckBox teacherCheckBox = new CheckBox("Teacher");
+        CheckBox teacherCheckBox = new CheckBox("Lecturer");
 
         Button createUserButton = new Button("Create User");
         createUserButton.setOnAction(e -> controller.createUser(name.getText(), id.getText(), password.getText(),
