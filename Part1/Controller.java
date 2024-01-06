@@ -170,7 +170,7 @@ public class Controller {
         }
         
         else{
-            view.errorMessenge("Duplicate Course Detected", "Duplicate Course");
+            view.errorMessenge("Course Existed", "Duplicate Course");
         }
 
         
