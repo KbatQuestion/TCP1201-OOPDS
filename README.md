@@ -21,4 +21,3 @@ Password = 0000
 4) Students can self-register for courses in new trimesters. [1m] :heavy_check_mark:
 5) Lecturers can view all the students in their courses. [1m] :heavy_check_mark:
 6) Admin can view all the students and the lecturers for courses. [1m] :heavy_check_mark:
-

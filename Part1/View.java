@@ -654,7 +654,7 @@ public class View extends Application {
         button1.setOnAction(e -> viewMyStudents(courseAdded));
 
         Button button2 = new Button("Cancel");
-        button2.setOnAction(e -> setStudentMainMenuScene());
+        button2.setOnAction(e -> setTeacherMainMenuScene());
 
         courseAdded.getItems().addAll(courseStrings);
 
@@ -755,7 +755,7 @@ public class View extends Application {
         GridPane.setConstraints(button3, 2, 5);
         GridPane.setConstraints(button4, 2, 6);
 
-        viewMembersGrid.getChildren().addAll(button1, button2, button3, button4, welcome, table);
+        viewMembersGrid.getChildren().addAll(button4, welcome, table);
 
         viewviewAdminStudents = new Scene(viewMembersGrid, 800, 450);
         window.setScene(viewviewAdminStudents);

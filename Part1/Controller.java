@@ -112,8 +112,8 @@ public class Controller {
         }
 
         if (studentCheckBox.isSelected() && !teacherCheckBox.isSelected()) {
-            HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>();
-            HashMap<Integer, String> tempStudentNameHashMap = new HashMap<Integer, String>();
+            HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>(model.getStudentPasswordHashMap());
+            HashMap<Integer, String> tempStudentNameHashMap = new HashMap<Integer, String>(model.getStudentNameHashMap());
 
             tempStudentPasswordHashMap.put(idInt, password);
             tempStudentNameHashMap.put(idInt, name);
