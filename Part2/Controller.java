@@ -101,15 +101,12 @@ public class Controller {
 
         int idInt = Integer.parseInt(id);
 
-        if (!model.takenID.contains(idInt)){
+        if (!model.takenID.contains(idInt)) {
             if (teacherCheckBox.isSelected() && !studentCheckBox.isSelected()) {
                 HashMap<Integer, String> tempTacherPasswordHashMap = new HashMap<Integer, String>(
                         model.getTeacherPasswordHashMap());
                 HashMap<Integer, String> tempTeacherNameHashMap = new HashMap<Integer, String>(
                         model.getTeacherNameHashMap());
-
-                
-                    
 
                 tempTeacherNameHashMap.put(idInt, name);
                 tempTacherPasswordHashMap.put(idInt, password);
@@ -117,17 +114,24 @@ public class Controller {
                 model.setTeacherPasswordHashMap(tempTacherPasswordHashMap);
                 model.takenID.add(idInt);
 
-
                 view.errorMessenge("Lecturer " + (name) + " Created Sucessfully", "User Created");
-                
+
             }
 
             if (studentCheckBox.isSelected() && !teacherCheckBox.isSelected()) {
-                HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>(model.getStudentPasswordHashMap());
-                HashMap<Integer, String> tempStudentNameHashMap = new HashMap<Integer, String>(model.getStudentNameHashMap());
-                HashMap<Integer, Set<String>> studentFutureRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentFutureRecordHashMap());
-                HashMap<Integer, Integer> studentCreditHashMap = new HashMap<Integer, Integer>(model.getStudentCreditHashMap());
+                HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>(
+                        model.getStudentPasswordHashMap());
+                HashMap<Integer, String> tempStudentNameHashMap = new HashMap<Integer, String>(
+                        model.getStudentNameHashMap());
+                HashMap<Integer, Set<String>> studentFutureRecordHashMap = new HashMap<Integer, Set<String>>(
+                        model.getStudentFutureRecordHashMap());
+                HashMap<Integer, Integer> studentCreditHashMap = new HashMap<Integer, Integer>(
+                        model.getStudentCreditHashMap());
                 Set<String> hash_Set = new HashSet<String>();
+                Set<String> hash_Set2 = new HashSet<String>();
+
+                HashMap<Integer, Set<String>> studentRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentRecordHashMap());
+                HashMap<Integer, Set<String>> studentPastRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentPastRecordHashMap());
 
                 hash_Set.add("CS113");
                 hash_Set.add("CS123");
@@ -136,35 +140,37 @@ public class Controller {
                 hash_Set.add("CS214");
                 hash_Set.add("CS234");
                 hash_Set.add("CS316");
-                
+
+                hash_Set2.add(null);
+
                 tempStudentPasswordHashMap.put(idInt, password);
                 tempStudentNameHashMap.put(idInt, name);
-                studentFutureRecordHashMap.put(idInt,hash_Set);
+                studentFutureRecordHashMap.put(idInt, hash_Set);
                 studentCreditHashMap.put(idInt, 0);
+                studentRecordHashMap.put(idInt,hash_Set2 );
+                studentPastRecordHashMap.put(idInt, hash_Set2);
+
 
                 model.setStudentNameHashMap(tempStudentNameHashMap);
                 model.setStudentPasswordHashMap(tempStudentPasswordHashMap);
                 model.setStudentFutureRecordHashMap(studentFutureRecordHashMap);
                 model.setStudentCreditHashMap(studentCreditHashMap);
+                model.setStudentRecordHashMap(studentRecordHashMap);
+                model.setStudentPastRecordHashMap(studentPastRecordHashMap);
                 model.takenID.add(idInt);
-                
+
                 System.out.println(studentFutureRecordHashMap);
 
-
-                
-
                 view.errorMessenge("Student " + (name) + " Created Sucessfully", "User Created");
-            
+
             }
 
             if (studentCheckBox.isSelected() && teacherCheckBox.isSelected()) {
                 view.errorMessenge("Pick One User Type Only", "Invalid Option");
             }
 
-            
-
-        }
-        else view.errorMessenge( id +  " has been taken", "ID Taken");
+        } else
+            view.errorMessenge(id + " has been taken", "ID Taken");
 
     }
 
@@ -176,15 +182,16 @@ public class Controller {
 
         if (lectureName.getValue() != null || courseNameBox.getValue() != null) {
 
-           String courseName = courseNameBox.getValue();
-            
+            String courseName = courseNameBox.getValue();
+
             HashMap<Integer, String> NameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
             String lectureSelected = lectureName.getValue();
             Set<String> courseAvailablSet = new HashSet<String>(model.getCourseAvailablSet());
             HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>(
                     model.getTeacherAsignCourseHashMap());
 
-            HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>(model.getLectureRecordHashMap());
+            HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>(
+                    model.getLectureRecordHashMap());
 
             Integer foundKey = getKeyByValue(NameHashMap, lectureSelected);
 
@@ -214,8 +221,8 @@ public class Controller {
             }
         }
 
-        else view.errorMessenge("Invalid Option", "Select a Lecture/Subject");
-
+        else
+            view.errorMessenge("Invalid Option", "Select a Lecture/Subject");
 
     }
 
@@ -256,7 +263,6 @@ public class Controller {
         String[] stringArray = coursearray;
         return stringArray;
     }
-
 
     public ArrayList<String> populateCourseCreatorChoiceBox() {
 
@@ -308,26 +314,125 @@ public class Controller {
     }
 
     public void addStudentSubjects(ChoiceBox<String> courseAdded) {
-        HashMap<Integer, Set<String>> studentAsignCourseHashMap = new HashMap<Integer, Set<String>>(
-                model.getStudentRecordHashMap());
-        HashMap<String, Set<Integer>> courseAssignStudentHashMap = new HashMap<String, Set<Integer>>(
-                model.getSubjectRecordHashMap());
-        String course = courseAdded.getValue();
 
-       if (courseAdded.getValue() != null){
-            addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
-            addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
+        if (courseAdded.getValue() == "CS214") {
 
-            model.setStudentRecordHashMap(studentAsignCourseHashMap);
-            model.setSubjectRecordHashMap(courseAssignStudentHashMap);
-            view.errorMessenge("Sucessfully Registered for " + course, "Register Sucess");
 
-            System.out.println("Student Record" + studentAsignCourseHashMap);
+            HashMap<Integer, Set<String>> studentAsignCourseHashMap = new HashMap<Integer, Set<String>>(model.getStudentRecordHashMap());
+            HashMap<String, Set<Integer>> courseAssignStudentHashMap = new HashMap<String, Set<Integer>>(model.getSubjectRecordHashMap());
+            String course = courseAdded.getValue();
+            HashMap<Integer, Set<String>> studentPastRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentPastRecordHashMap());
+            Set<String> pastRecord  = new HashSet<>();
 
-            System.out.println("Course Recoed" + courseAssignStudentHashMap);
-       }
+            pastRecord = studentPastRecordHashMap.get(model.currentUser);
 
-       else view.errorMessenge("Select a Subject", "Select a Subject");
+
+
+            if (pastRecord.contains("CS113")) {
+                addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
+                addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
+
+                model.setStudentRecordHashMap(studentAsignCourseHashMap);
+                model.setSubjectRecordHashMap(courseAssignStudentHashMap);
+                view.errorMessenge("Sucessfully Registered for " + course, "Register Sucess");
+
+                System.out.println("Student Record" + studentAsignCourseHashMap);
+
+                System.out.println("Course Recoed" + courseAssignStudentHashMap);
+            }
+
+            else view.errorMessenge("Requirement is not met", "Requirement is not met");
+
+
+        }
+
+        if (courseAdded.getValue() == "CS224") {
+
+
+            HashMap<Integer, Set<String>> studentAsignCourseHashMap = new HashMap<Integer, Set<String>>(model.getStudentRecordHashMap());
+            HashMap<String, Set<Integer>> courseAssignStudentHashMap = new HashMap<String, Set<Integer>>(model.getSubjectRecordHashMap());
+            String course = courseAdded.getValue();
+            HashMap<Integer, Set<String>> studentPastRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentPastRecordHashMap());
+            Set<String> pastRecord  = new HashSet<>();
+
+            pastRecord = studentPastRecordHashMap.get(model.currentUser);
+
+
+
+            if (pastRecord.contains("CS123")) {
+                addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
+                addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
+
+                model.setStudentRecordHashMap(studentAsignCourseHashMap);
+                model.setSubjectRecordHashMap(courseAssignStudentHashMap);
+                view.errorMessenge("Sucessfully Registered for " + course, "Register Sucess");
+
+                System.out.println("Student Record" + studentAsignCourseHashMap);
+
+                System.out.println("Course Recoed" + courseAssignStudentHashMap);
+            }
+
+            else view.errorMessenge("Requirement is not met", "Requirement is not met");
+
+
+        }
+
+        if (courseAdded.getValue() == "CS316 ") {
+
+
+            HashMap<Integer, Set<String>> studentAsignCourseHashMap = new HashMap<Integer, Set<String>>(model.getStudentRecordHashMap());
+            HashMap<String, Set<Integer>> courseAssignStudentHashMap = new HashMap<String, Set<Integer>>(model.getSubjectRecordHashMap());
+            String course = courseAdded.getValue();
+            HashMap<Integer, Set<String>> studentPastRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentPastRecordHashMap());
+            Set<String> pastRecord  = new HashSet<>();
+            HashMap<Integer, Integer> studentCreditHashMap = new HashMap<Integer, Integer>(model.getStudentCreditHashMap());
+
+            pastRecord = studentPastRecordHashMap.get(model.currentUser);
+
+
+
+            if (pastRecord.contains("CS133") && pastRecord.contains("CS214") && studentCreditHashMap.get(model.currentUser) <= 15) {
+                addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
+                addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
+
+                model.setStudentRecordHashMap(studentAsignCourseHashMap);
+                model.setSubjectRecordHashMap(courseAssignStudentHashMap);
+                view.errorMessenge("Sucessfully Registered for " + course, "Register Sucess");
+
+                System.out.println("Student Record" + studentAsignCourseHashMap);
+
+                System.out.println("Course Recoed" + courseAssignStudentHashMap);
+            }
+
+            else view.errorMessenge("Requirement is not met", "Requirement is not met");
+
+
+        }
+
+        else {
+            HashMap<Integer, Set<String>> studentAsignCourseHashMap = new HashMap<Integer, Set<String>>(
+                    model.getStudentRecordHashMap());
+            HashMap<String, Set<Integer>> courseAssignStudentHashMap = new HashMap<String, Set<Integer>>(
+                    model.getSubjectRecordHashMap());
+            String course = courseAdded.getValue();
+
+            if (courseAdded.getValue() != null) {
+                addToHashMap(courseAssignStudentHashMap, course, model.currentUser);
+                addToHashMapStudent(studentAsignCourseHashMap, model.currentUser, course);
+
+                model.setStudentRecordHashMap(studentAsignCourseHashMap);
+                model.setSubjectRecordHashMap(courseAssignStudentHashMap);
+                view.errorMessenge("Sucessfully Registered for " + course, "Register Sucess");
+
+                System.out.println("Student Record" + studentAsignCourseHashMap);
+
+                System.out.println("Course Recoed" + courseAssignStudentHashMap);
+            }
+
+            else
+                view.errorMessenge("Select a Subject", "Select a Subject");
+
+        }
 
     }
 
@@ -401,17 +506,49 @@ public class Controller {
 
     }
 
-    public void checkMinCourseWork(){
+    public void checkMinCourseWork() {
 
         HashMap<Integer, Integer> studentCreditHashMap = new HashMap<Integer, Integer>(model.getStudentCreditHashMap());
-        
+
         Integer courseworkHour = studentCreditHashMap.get(model.currentUser);
 
-        if(courseworkHour < 3){
+        if (courseworkHour < 3) {
             view.errorMessenge("Not enough Credit ", "Please Enroll to More Classes");
         }
 
-        else return;
+        else
+            return;
 
     }
+
+    public Set<String> getStudentFutureRecord() {
+        HashMap<Integer, Set<String>> studentFutureRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentFutureRecordHashMap());
+        Set<String> future = new HashSet<>(studentFutureRecordHashMap.get(model.currentUser));
+        return future;
+    }
+
+    public Set<String> getStudentPastRecord() {
+        HashMap<Integer, Set<String>> studentPastRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentPastRecordHashMap());
+        Set<String> past = new HashSet<>(studentPastRecordHashMap.get(model.currentUser));
+        return past;
+    }
+
+    public Set<String> getStudentRecord() {
+        HashMap<Integer, Set<String>> studentRecordHashMap = new HashMap<Integer, Set<String>>(model.getStudentRecordHashMap());
+        Set<String> current = new HashSet<>(studentRecordHashMap.get(model.currentUser));
+        return current;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -2,6 +2,8 @@ package Part2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import Part2.Model.Model;
 import Part2.Model.ModelTable;
@@ -623,26 +625,32 @@ public class View extends Application {
     }
 
     public void viewStudentCourse() {
+       Set<String> pastRecord  = new HashSet<>(controller.getStudentPastRecord());
+       Set<String> futureRecord  = new HashSet<>(controller.getStudentFutureRecord());
+       Set<String> currentRecord  = new HashSet<>(controller.getStudentRecord());
 
         GridPane studentViewMySubjectsGrid = new GridPane();
         studentViewMySubjectsGrid.setPadding(new Insets(10, 10, 10, 10));
         studentViewMySubjectsGrid.setVgap(20);
         studentViewMySubjectsGrid.setHgap(20);
 
-        Label welcome = new Label("Your Class");
-        Label classesLabel = new Label("Your Subjects");
+        Label welcome = new Label("Current Subject: " + currentRecord);
+        Label classesLabel = new Label("Your Future Subject: " + futureRecord);
+        Label classesLabel2 = new Label("Your Passed Subject: " + pastRecord);
+
 
         Button button4 = new Button("Back");
         button4.setOnAction(e -> setStudentMainMenuScene());
 
         GridPane.setConstraints(welcome, 2, 0);
-        GridPane.setConstraints(classesLabel, 4, 1);
+        GridPane.setConstraints(classesLabel, 2, 1);
+        GridPane.setConstraints(classesLabel2, 2, 2);
 
-        GridPane.setConstraints(button4, 2, 4);
+        GridPane.setConstraints(button4, 4, 4);
 
-        studentViewMySubjectsGrid.getChildren().addAll(button4, welcome, classesLabel);
+        studentViewMySubjectsGrid.getChildren().addAll(button4, welcome, classesLabel,classesLabel2);
 
-        sceneStudentViewSubjects = new Scene(studentViewMySubjectsGrid, 400, 250);
+        sceneStudentViewSubjects = new Scene(studentViewMySubjectsGrid, 550, 250);
         window.setScene(sceneStudentViewSubjects);
 
     }
