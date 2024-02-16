@@ -87,7 +87,7 @@ public class Model {
 
     // remove later
     private HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>();
-
+    private HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>();
     
     private HashMap<String, Integer> assignLectureHashMap = new HashMap<String, Integer>();
     private HashMap<String, ArrayList<Integer>> assignStudentHashMap = new HashMap<String, ArrayList<Integer>>();

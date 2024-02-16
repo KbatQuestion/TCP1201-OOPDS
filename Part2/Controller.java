@@ -48,11 +48,10 @@ public class Controller {
         if (containsOnlyNumbers(id)) {
             int idInt = Integer.parseInt(id);
 
-            HashMap<Integer, String> tempTeacherPasswordHashMap = new HashMap<Integer, String>(
-                    model.getTeacherPasswordHashMap());
-
-            HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<Integer, String>(
-                    model.getStudentPasswordHashMap());
+            HashMap<Integer, String> tempTeacherPasswordHashMap = new HashMap<>();
+            tempTeacherPasswordHashMap.putAll(loadFromFileForLecturer());
+            HashMap<Integer, String> tempStudentPasswordHashMap = new HashMap<>();
+            tempStudentPasswordHashMap.putAll(loadFromFileForStudent());
 
             if (tempTeacherPasswordHashMap.containsKey(idInt)) {
 
@@ -547,27 +546,36 @@ public class Controller {
         return current;
     }
 
-public int currenTrimInteger;
+    public int currenTrimInteger;
 
     public void trimesterSystem(String trimester_num) {
         HashMap<Integer, Set<String>> tempstudentRecordHashMap = new HashMap<>(model.getStudentRecordHashMap());
         HashMap<Integer, Set<String>> tempstudentPastRecordHashMap = new HashMap<>(model.getStudentPastRecordHashMap());
-        HashMap<Integer, Set<String>> tempstudentFutureRecordHashMap = new HashMap<>(model.getStudentFutureRecordHashMap());
+        HashMap<Integer, Set<String>> tempstudentFutureRecordHashMap = new HashMap<>(
+                model.getStudentFutureRecordHashMap());
 
         Set<String> tempcourseAvailablSet = new HashSet<String>(model.getCourseAvailablSet());
-    
+
         System.out.println("Hello World.");
         System.out.println(trimester_num);
         if ("Trimester 1".equals(trimester_num)) {
-            
+
             // this is just try and error
             // for (Set<String> pastCourses : tempstudentPastRecordHashMap.values()) {
-            //     for (Set<String> futureCourses : tempstudentFutureRecordHashMap.values()) {
-            //         futureCourses.removeAll(pastCourses);
-            //     }
+            // for (Set<String> futureCourses : tempstudentFutureRecordHashMap.values()) {
+            // futureCourses.removeAll(pastCourses);
             // }
-        } 
-        else if ("Trimester 2".equals(trimester_num)) {
+            // }
+        } else if ("Trimester 2".equals(trimester_num)) {
+            for (Map.Entry<Integer, Set<String>> entry : tempstudentPastRecordHashMap.entrySet()) {
+                Integer key = entry.getKey();
+                Set<String> pastRecords = entry.getValue();
+                Set<String> futureRecords = tempstudentFutureRecordHashMap.get(key);
+                if (futureRecords != null) {
+                    futureRecords.removeAll(pastRecords);
+                }
+            }
+        } else if ("Trimester 3".equals(trimester_num)) {
             for (Map.Entry<Integer, Set<String>> entry : tempstudentPastRecordHashMap.entrySet()) {
                 Integer key = entry.getKey();
                 Set<String> pastRecords = entry.getValue();
@@ -577,32 +585,141 @@ public int currenTrimInteger;
                 }
             }
         }
-        else if ("Trimester 3".equals(trimester_num)) {
-            for (Map.Entry<Integer, Set<String>> entry : tempstudentPastRecordHashMap.entrySet()) {
-                Integer key = entry.getKey();
-                Set<String> pastRecords = entry.getValue();
-                Set<String> futureRecords = tempstudentFutureRecordHashMap.get(key);
-                if (futureRecords != null) {
-                    futureRecords.removeAll(pastRecords);
-                }
-            }
-        }
-    
-        model.setStudentRecordHashMap(tempstudentRecordHashMap); //last line to save the data
+
+        model.setStudentRecordHashMap(tempstudentRecordHashMap); // last line to save the data
         model.setStudentPastRecordHashMap(tempstudentPastRecordHashMap);
         model.setStudentFutureRecordHashMap(tempstudentFutureRecordHashMap);
         tempcourseAvailablSet.clear();
         if (trimester_num == "Trimester 1") {
             currenTrimInteger = 1;
-        }
-        else if (trimester_num == "Trimester 2") {
+        } else if (trimester_num == "Trimester 2") {
             currenTrimInteger = 2;
-        }
-        else if (trimester_num == "Trimester 3") {
+        } else if (trimester_num == "Trimester 3") {
             currenTrimInteger = 3;
         }
 
         model.currenTrimInteger = currenTrimInteger;
         view.errorMessenge("Please refresh the page", "Refresh the page");
+    }
+
+    // Check if the key of the created user is already inside the CSV file
+    private boolean keyExistInCSV(int key, String fileName) {
+        try {
+            return Files.lines(Paths.get(fileName))
+                    .anyMatch(line -> line.startsWith(key + ","));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean isFileEmpty(String fileName) {
+        try {
+            return Files.size(Paths.get(fileName)) == 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+    // save student credentials to csv file
+    public void saveToFileForStudent() {
+        HashMap<Integer, String> studentPasswordHashMap = new HashMap<Integer, String>(
+                model.getStudentPasswordHashMap());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("StudentsCredentials.csv", true))) {
+            boolean firstEntry = true;
+            boolean fileIsEmpty = isFileEmpty("StudentsCredentials.csv");
+            if (!fileIsEmpty) {
+                writer.newLine();
+            }
+            for (HashMap.Entry<Integer, String> entry : studentPasswordHashMap.entrySet()) {
+                if (!keyExistInCSV(entry.getKey(), "StudentsCredentials.csv")) {
+                    if (!firstEntry || fileIsEmpty) {
+                        writer.newLine();
+                    } else {
+                        firstEntry = false;
+                    }
+                    writer.write(entry.getKey() + "," + entry.getValue());
+                    System.out.println("Student credentials successfully saved to system");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // save lecturer credentials to csv file
+    public void saveToFileForLecturer() {
+        HashMap<Integer, String> teacherPasswordHashMap = new HashMap<Integer, String>(
+                model.getTeacherPasswordHashMap());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("LecturersCredentials.csv", true))) {
+            boolean firstEntry = true;
+            for (HashMap.Entry<Integer, String> entry : teacherPasswordHashMap.entrySet()) {
+                if (!keyExistInCSV(entry.getKey(), "LecturersCredentials.csv")) {
+                    if (!firstEntry) {
+                        writer.newLine();
+                    } else {
+                        firstEntry = false;
+                    }
+                    writer.write(entry.getKey() + "," + entry.getValue());
+                    writer.newLine();
+                    System.out.println("Lecturer credentials successfully saved to system");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // load csv details for Lecturer credentials to file
+    public HashMap<Integer, String> loadFromFileForLecturer() {
+        HashMap<Integer, String> teacherPasswordHashMap = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("LecturersCredentials.csv"))) {
+            String line;
+            boolean firstLineSkipped = false;
+            while ((line = reader.readLine()) != null) {
+                if (!firstLineSkipped) {
+                    firstLineSkipped = true;
+                    continue; // Skip the first line
+                }
+                String[] parts = line.split(",");
+                if (parts.length == 2) { // Ensure the line is in key,value format
+                    int key = Integer.parseInt(parts[0]);
+                    String value = parts[1];
+                    teacherPasswordHashMap.put(key, value);
+                }
+            }
+            System.out.println("Lecturer credentials successfully loaded from system");
+            System.out.println(teacherPasswordHashMap.toString());
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return teacherPasswordHashMap;
+    }
+
+    // Load csv details for student credentials into the hashmap
+    public HashMap<Integer, String> loadFromFileForStudent() {
+        HashMap<Integer, String> studentPasswordHashMap = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("StudentsCredentials.csv"))) {
+            String line;
+            boolean firstLineSkip = false;
+            while ((line = reader.readLine()) != null) {
+                if (!firstLineSkip) {
+                    firstLineSkip = true;
+                    continue;
+                }
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    int key = Integer.parseInt(parts[0]);
+                    String value = parts[1];
+                    studentPasswordHashMap.put(key, value);
+                }
+            }
+            System.out.println("Students credentials succesfully loaded into system");
+            System.out.println(studentPasswordHashMap.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return studentPasswordHashMap;
     }
 }

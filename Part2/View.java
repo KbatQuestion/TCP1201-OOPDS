@@ -62,9 +62,9 @@ public class View extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.window = primaryStage;
         this.controller = new Controller(this);
+        // controller.loadFromFileForLecturer();
+        // controller.loadFromFileForStudent();
         logInMenu();
-        controller.loadFromFileForLecturer();
-        controller.loadFromFileForStudent();
     }
 
     public void logInMenu() {
@@ -133,8 +133,8 @@ public class View extends Application {
         button2.setOnAction(e -> addStudentCourse());
 
         Button button4 = new Button("Log Out");
-        button4.setOnAction(e -> logInMenu());
         button4.setOnAction(e -> controller.saveToFileForStudent());
+        button4.setOnAction(e -> logInMenu());
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -168,8 +168,8 @@ public class View extends Application {
         button2.setOnAction(e -> viewCourseTable());
 
         Button button4 = new Button("Log Out");
-        button4.setOnAction(e -> logInMenu());
         button4.setOnAction(e -> controller.saveToFileForLecturer());
+        button4.setOnAction(e -> logInMenu());
 
         GridPane.setConstraints(welcome, 2, 0);
         GridPane.setConstraints(button1, 2, 1);
@@ -769,17 +769,13 @@ public class View extends Application {
 
     public void trimesterSelector() {
 
-  
-
-    
-
         GridPane root = new GridPane();
         root.setPadding(new Insets(10, 10, 10, 10));
         root.setVgap(20);
         root.setHgap(20);
 
         Label Label = new Label("Select to which Trimester to change");
-        Label currentTrimesterLabel = new Label("Current Trimester: " + controller.currenTrimInteger );
+        Label currentTrimesterLabel = new Label("Current Trimester: " + controller.currenTrimInteger);
 
         ComboBox<String> ComboBox = new ComboBox<>();
         ComboBox.getItems().addAll("Trimester 1", "Trimester 2", "Trimester 3");
