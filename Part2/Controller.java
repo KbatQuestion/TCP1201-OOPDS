@@ -588,7 +588,6 @@ public class Controller {
                     System.out.println("Student credentials successfully saved to system");
                 }
             }
-            view.logInMenu();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -612,14 +611,13 @@ public class Controller {
                     System.out.println("Lecturer credentials successfully saved to system");
                 }
             }
-            view.logInMenu();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     // load csv details for Lecturer credentials to file
-    public void loadFromFileForLecturer() {
+    public HashMap<Integer, String> loadFromFileForLecturer() {
         HashMap<Integer, String> teacherPasswordHashMap = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("LecturersCredentials.csv"))) {
             String line;
@@ -641,12 +639,11 @@ public class Controller {
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
-
-        // Use teacherPasswordHashMap as needed after loading the data
+        return teacherPasswordHashMap;
     }
 
     // Load csv details for student credentials into the hashmap
-    public void loadFromFileForStudent() {
+    public HashMap<Integer, String> loadFromFileForStudent() {
         HashMap<Integer, String> studentPasswordHashMap = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("StudentsCredentials.csv"))) {
             String line;
@@ -668,5 +665,6 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return studentPasswordHashMap;
     }
 }

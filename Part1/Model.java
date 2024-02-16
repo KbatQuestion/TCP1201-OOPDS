@@ -80,6 +80,7 @@ public class Model {
     private HashMap<Integer, String> teacherNameHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, ArrayList<String>> teacherAsignCourseHashMap = new HashMap<Integer, ArrayList<String>>();
 
+    
     private HashMap<Integer, String> studentPasswordHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, String> studentNameHashMap = new HashMap<Integer, String>();
     private HashMap<Integer, Set<String>> studentRecordHashMap = new HashMap<Integer, Set<String>>();
@@ -87,7 +88,9 @@ public class Model {
     // remove later
     private HashMap<String, Integer> lectureRecordHashMap = new HashMap<String, Integer>();
 
-    private HashMap<String, Set<Integer>> subjectRecordHashMap = new HashMap<String, Set<Integer>>();
+    
+    private HashMap<String, Integer> assignLectureHashMap = new HashMap<String, Integer>();
+    private HashMap<String, ArrayList<Integer>> assignStudentHashMap = new HashMap<String, ArrayList<Integer>>();
     private Set<String> courseAvailablSet = new HashSet<String>();
 
     // Getter

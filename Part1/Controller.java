@@ -133,7 +133,7 @@ public class Controller {
         return str.matches("[0-9]+");
     }
 
-    public void createCourse(String corseName, ChoiceBox<String> lectureName) {
+    public void createCourse(String corseName,ChoiceBox<String> lectureName){
 
         HashMap<Integer, String> NameHashMap = new HashMap<Integer, String>(model.getTeacherNameHashMap());
         String lectureSelected = lectureName.getValue();
