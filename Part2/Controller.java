@@ -539,16 +539,62 @@ public class Controller {
         return current;
     }
 
+public int currenTrimInteger;
 
+    public void trimesterSystem(String trimester_num) {
+        HashMap<Integer, Set<String>> tempstudentRecordHashMap = new HashMap<>(model.getStudentRecordHashMap());
+        HashMap<Integer, Set<String>> tempstudentPastRecordHashMap = new HashMap<>(model.getStudentPastRecordHashMap());
+        HashMap<Integer, Set<String>> tempstudentFutureRecordHashMap = new HashMap<>(model.getStudentFutureRecordHashMap());
 
+        Set<String> tempcourseAvailablSet = new HashSet<String>(model.getCourseAvailablSet());
+    
+        System.out.println("Hello World.");
+        System.out.println(trimester_num);
+        if ("Trimester 1".equals(trimester_num)) {
+            
+            // this is just try and error
+            // for (Set<String> pastCourses : tempstudentPastRecordHashMap.values()) {
+            //     for (Set<String> futureCourses : tempstudentFutureRecordHashMap.values()) {
+            //         futureCourses.removeAll(pastCourses);
+            //     }
+            // }
+        } 
+        else if ("Trimester 2".equals(trimester_num)) {
+            for (Map.Entry<Integer, Set<String>> entry : tempstudentPastRecordHashMap.entrySet()) {
+                Integer key = entry.getKey();
+                Set<String> pastRecords = entry.getValue();
+                Set<String> futureRecords = tempstudentFutureRecordHashMap.get(key);
+                if (futureRecords != null) {
+                    futureRecords.removeAll(pastRecords);
+                }
+            }
+        }
+        else if ("Trimester 3".equals(trimester_num)) {
+            for (Map.Entry<Integer, Set<String>> entry : tempstudentPastRecordHashMap.entrySet()) {
+                Integer key = entry.getKey();
+                Set<String> pastRecords = entry.getValue();
+                Set<String> futureRecords = tempstudentFutureRecordHashMap.get(key);
+                if (futureRecords != null) {
+                    futureRecords.removeAll(pastRecords);
+                }
+            }
+        }
+    
+        model.setStudentRecordHashMap(tempstudentRecordHashMap); //last line to save the data
+        model.setStudentPastRecordHashMap(tempstudentPastRecordHashMap);
+        model.setStudentFutureRecordHashMap(tempstudentFutureRecordHashMap);
+        tempcourseAvailablSet.clear();
+        if (trimester_num == "Trimester 1") {
+            currenTrimInteger = 1;
+        }
+        else if (trimester_num == "Trimester 2") {
+            currenTrimInteger = 2;
+        }
+        else if (trimester_num == "Trimester 3") {
+            currenTrimInteger = 3;
+        }
 
-
-
-
-
-
-
-
-
-
+        model.currenTrimInteger = currenTrimInteger;
+        view.errorMessenge("Please refresh the page", "Refresh the page");
+    }
 }

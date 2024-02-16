@@ -779,7 +779,7 @@ public class View extends Application {
 
      public void trimesterSelector() {
 
-        Model model = new Model();
+  
 
     
 
@@ -789,13 +789,14 @@ public class View extends Application {
         root.setHgap(20);
 
         Label Label = new Label("Select to which Trimester to change");
-        Label currentTrimesterLabel = new Label("Current Trimester: " + model.currenTrimInteger );
+        Label currentTrimesterLabel = new Label("Current Trimester: " + controller.currenTrimInteger );
 
         ComboBox<String> ComboBox = new ComboBox<>();
         ComboBox.getItems().addAll("Trimester 1", "Trimester 2","Trimester 3");
 
         Button btn = new Button();
         btn.setText("Change");
+        btn.setOnAction(e -> controller.trimesterSystem(ComboBox.getValue()));
         Button btn2 = new Button();
         btn2.setText("Go Back");
         btn2.setOnAction(e -> setAdminMainMenuScene() );
