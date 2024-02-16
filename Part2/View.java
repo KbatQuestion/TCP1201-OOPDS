@@ -7,6 +7,7 @@ import java.util.Set;
 
 import Part2.Model.Model;
 import Part2.Model.ModelTable;
+import Part2.Controller;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,7 +56,6 @@ public class View extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
     }
 
     @Override
@@ -63,6 +63,8 @@ public class View extends Application {
         this.window = primaryStage;
         this.controller = new Controller(this);
         logInMenu();
+        controller.loadFromFileForLecturer();
+        controller.loadFromFileForStudent();
     }
 
     public void logInMenu() {
@@ -117,7 +119,6 @@ public class View extends Application {
 
     public void setStudentMainMenuScene() {
 
-
         GridPane studentGrid = new GridPane();
         studentGrid.setPadding(new Insets(10, 10, 10, 10));
         studentGrid.setVgap(20);
@@ -133,6 +134,7 @@ public class View extends Application {
 
         Button button4 = new Button("Log Out");
         button4.setOnAction(e -> logInMenu());
+        button4.setOnAction(e -> controller.saveToFileForStudent());
 
         GridPane.setConstraints(welcome, 2, 0);
 
@@ -145,13 +147,7 @@ public class View extends Application {
 
         sceneStudentMainMenu = new Scene(studentGrid, 400, 250);
         window.setScene(sceneStudentMainMenu);
-        
 
-
-
-
-
-        
     }
 
     // Teacher MainMenu Gui
@@ -171,13 +167,11 @@ public class View extends Application {
         Button button2 = new Button("View my Students");
         button2.setOnAction(e -> viewCourseTable());
 
-
-
         Button button4 = new Button("Log Out");
         button4.setOnAction(e -> logInMenu());
+        button4.setOnAction(e -> controller.saveToFileForLecturer());
 
         GridPane.setConstraints(welcome, 2, 0);
-
         GridPane.setConstraints(button1, 2, 1);
         GridPane.setConstraints(button2, 2, 2);
         GridPane.setConstraints(button4, 2, 4);
@@ -226,11 +220,10 @@ public class View extends Application {
         GridPane.setConstraints(button2, 2, 2);
         GridPane.setConstraints(button4, 2, 3);
         GridPane.setConstraints(button5, 2, 4);
-        GridPane.setConstraints(button6, 2, 6
-        );
+        GridPane.setConstraints(button6, 2, 6);
         GridPane.setConstraints(button7, 2, 5);
 
-        adminGrid.getChildren().addAll(button1, button2, button4, button5, button6,button7, welcome);
+        adminGrid.getChildren().addAll(button1, button2, button4, button5, button6, button7, welcome);
 
         sceneAdminMainMenu = new Scene(adminGrid, 400, 400);
         window.setScene(sceneAdminMainMenu);
@@ -328,7 +321,6 @@ public class View extends Application {
         String[] names = controller.populateLecureChoiceBox();
         ArrayList<String> course = controller.populateCourseCreatorChoiceBox();
 
-
         GridPane createCourseGrid = new GridPane();
         createCourseGrid.setPadding(new Insets(10, 10, 10, 10));
         createCourseGrid.setVgap(20);
@@ -349,7 +341,6 @@ public class View extends Application {
 
         Button button2 = new Button("Cancel");
         button2.setOnAction(e -> setAdminMainMenuScene());
-
 
         assignedLecture.getItems().addAll(names);
         coursChoiceBox.getItems().addAll(course);
@@ -625,9 +616,9 @@ public class View extends Application {
     }
 
     public void viewStudentCourse() {
-       Set<String> pastRecord  = new HashSet<>(controller.getStudentPastRecord());
-       Set<String> futureRecord  = new HashSet<>(controller.getStudentFutureRecord());
-       Set<String> currentRecord  = new HashSet<>(controller.getStudentRecord());
+        Set<String> pastRecord = new HashSet<>(controller.getStudentPastRecord());
+        Set<String> futureRecord = new HashSet<>(controller.getStudentFutureRecord());
+        Set<String> currentRecord = new HashSet<>(controller.getStudentRecord());
 
         GridPane studentViewMySubjectsGrid = new GridPane();
         studentViewMySubjectsGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -638,7 +629,6 @@ public class View extends Application {
         Label classesLabel = new Label("Your Future Subject: " + futureRecord);
         Label classesLabel2 = new Label("Your Passed Subject: " + pastRecord);
 
-
         Button button4 = new Button("Back");
         button4.setOnAction(e -> setStudentMainMenuScene());
 
@@ -648,7 +638,7 @@ public class View extends Application {
 
         GridPane.setConstraints(button4, 4, 4);
 
-        studentViewMySubjectsGrid.getChildren().addAll(button4, welcome, classesLabel,classesLabel2);
+        studentViewMySubjectsGrid.getChildren().addAll(button4, welcome, classesLabel, classesLabel2);
 
         sceneStudentViewSubjects = new Scene(studentViewMySubjectsGrid, 550, 250);
         window.setScene(sceneStudentViewSubjects);
@@ -777,11 +767,9 @@ public class View extends Application {
 
     }
 
-     public void trimesterSelector() {
+    public void trimesterSelector() {
 
         Model model = new Model();
-
-    
 
         GridPane root = new GridPane();
         root.setPadding(new Insets(10, 10, 10, 10));
@@ -789,16 +777,16 @@ public class View extends Application {
         root.setHgap(20);
 
         Label Label = new Label("Select to which Trimester to change");
-        Label currentTrimesterLabel = new Label("Current Trimester: " + model.currenTrimInteger );
+        Label currentTrimesterLabel = new Label("Current Trimester: " + model.currenTrimInteger);
 
         ComboBox<String> ComboBox = new ComboBox<>();
-        ComboBox.getItems().addAll("Trimester 1", "Trimester 2","Trimester 3");
+        ComboBox.getItems().addAll("Trimester 1", "Trimester 2", "Trimester 3");
 
         Button btn = new Button();
         btn.setText("Change");
         Button btn2 = new Button();
         btn2.setText("Go Back");
-        btn2.setOnAction(e -> setAdminMainMenuScene() );
+        btn2.setOnAction(e -> setAdminMainMenuScene());
 
         GridPane.setConstraints(btn, 1, 4);
         GridPane.setConstraints(Label, 1, 2);
@@ -806,8 +794,7 @@ public class View extends Application {
         GridPane.setConstraints(currentTrimesterLabel, 1, 1);
         GridPane.setConstraints(btn2, 2, 4);
 
-
-        root.getChildren().addAll(btn,btn2, Label, ComboBox, currentTrimesterLabel);
+        root.getChildren().addAll(btn, btn2, Label, ComboBox, currentTrimesterLabel);
 
         window.setScene(new Scene(root, 350, 250));
         window.show();
